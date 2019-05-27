@@ -7,9 +7,9 @@ namespace SalesTaxes.Domain
     {
         public IEnumerable<Entry> Entries { get; }
 
-        public Receipt(IEnumerable<Article> purchase)
+        public Receipt(Purchase purchase)
         {
-            Entries = purchase.Select(x => new Entry { Price = x.Price });
+            Entries = purchase.Articles.Select(x => new Entry { Price = x.Price });
         }
     }
 }

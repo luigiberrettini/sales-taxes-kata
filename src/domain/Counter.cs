@@ -1,19 +1,17 @@
-﻿using System.Collections.Generic;
-
-namespace SalesTaxes.Domain
+﻿namespace SalesTaxes.Domain
 {
     public class Counter
     {
-        private readonly List<Article> _purchase = new List<Article>();
+        private readonly Purchase _currentPurchase = new Purchase();
 
         public void Scan(Article article)
         {
-            _purchase.Add(article);
+            _currentPurchase.Add(article);
         }
 
         public Receipt EmitReceipt()
         {
-            return new Receipt(_purchase);
+            return new Receipt(_currentPurchase);
         }
     }
 }
