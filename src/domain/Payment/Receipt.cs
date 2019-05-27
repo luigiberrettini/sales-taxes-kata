@@ -1,16 +1,19 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using SalesTaxes.Domain.Shopping;
 
 namespace SalesTaxes.Domain.Payment
 {
     public class Receipt
     {
-        public IEnumerable<Entry> Entries { get; }
+        public IList<Entry> Entries { get; }
 
-        public Receipt(Purchase purchase)
+        public Receipt()
         {
-            Entries = purchase.Articles.Select(x => new Entry { Price = x.Price });
+            Entries = new List<Entry>();
+        }
+
+        public void Add(Entry entry)
+        {
+            Entries.Add(entry);
         }
     }
 }
