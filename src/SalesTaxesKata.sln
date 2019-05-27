@@ -1,9 +1,26 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.452
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "domain\Domain.csproj", "{FDE88785-C881-4EF2-AA07-41D6DB9C8554}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestSuite.Domain", "test-suite_domain\TestSuite.Domain.csproj", "{4CBB6354-DEBF-42EC-A78C-294095D90E51}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{1BE4D662-6372-4E0F-BCA4-7EA229144633}"
+	ProjectSection(SolutionItems) = preProject
+		..\.dockerignore = ..\.dockerignore
+		..\Dockerfile = ..\Dockerfile
+		..\README.md = ..\README.md
+		..\Vagrantfile = ..\Vagrantfile
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build scripts", "Build scripts", "{7BE1CA16-D210-4946-B8CD-57D9880DDCE8}"
+	ProjectSection(SolutionItems) = preProject
+		..\build\scripts\bootstrap.ps1 = ..\build\scripts\bootstrap.ps1
+		..\build\scripts\bootstrap.sh = ..\build\scripts\bootstrap.sh
+		..\build\scripts\cake.cs = ..\build\scripts\cake.cs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,6 +39,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7BE1CA16-D210-4946-B8CD-57D9880DDCE8} = {1BE4D662-6372-4E0F-BCA4-7EA229144633}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {25A4B7F0-4E35-413E-A885-73D684AF57CC}
