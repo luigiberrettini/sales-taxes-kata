@@ -15,7 +15,7 @@ namespace SalesTaxes.TestSuite.Domain
         public void NBooksAreExempt(int n)
         {
             var checkout = new Checkout();
-            var article = new Article { Id = 1, Name = "Gone with the wind", Price = 25.0M };
+            var article = new Article(1, "Gone with the wind", 25.0M);
             var priceForN = article.Price * n;
             Enumerable.Range(1, n).ToList().ForEach(x => checkout.Scan(article));
             var receipt = checkout.EmitReceipt();
@@ -25,7 +25,7 @@ namespace SalesTaxes.TestSuite.Domain
         [Fact]
         public void PurchaseGroupsByArticle()
         {
-            var article = new Article { Id = 1, Name = "Gone with the wind", Price = 25.0M };
+            var article = new Article(1, "Gone with the wind", 25.0M);
             var purchase = new Purchase();
             purchase.Add(article);
             purchase.Add(article);
