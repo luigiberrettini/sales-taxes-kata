@@ -14,7 +14,7 @@ namespace SalesTaxes.Domain.Shopping
 
         public Receipt EmitReceipt()
         {
-            return new Receipt(_currentPurchase);
+            return _currentPurchase.BuildReceipt();
         }
     }
 }
