@@ -1,0 +1,11 @@
+.vs
+build/tools
+**/bin/
+**/obj/
+**/*.user
+**/*.sln
+**/*.suo
+.gitattributes
+.gitignore
+LICENSE
+*.md
