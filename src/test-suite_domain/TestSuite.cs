@@ -36,7 +36,7 @@ namespace SalesTaxes.TestSuite.Domain
             var purchase = new Purchase();
             purchase.Add(article);
             purchase.Add(article);
-            Assert.NotNull(purchase.Articles.SingleOrDefault());
+            Assert.NotNull(purchase.Items.SingleOrDefault());
         }
     }
 }

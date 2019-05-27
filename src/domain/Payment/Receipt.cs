@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using SalesTaxes.Domain.Shopping;
+using System.Collections.Generic;
 using System.Linq;
-using SalesTaxes.Domain.Shopping;
 
 namespace SalesTaxes.Domain.Payment
 {
@@ -10,7 +10,7 @@ namespace SalesTaxes.Domain.Payment
 
         public Receipt(Purchase purchase)
         {
-            Entries = purchase.Articles.Select(x => new Entry { Price = x.Price });
+            Entries = purchase.Items.Select(x => new Entry { Price = x.Price * x.Quantity });
         }
     }
 }
