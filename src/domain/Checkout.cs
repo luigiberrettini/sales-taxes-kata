@@ -1,6 +1,6 @@
 ﻿namespace SalesTaxes.Domain
 {
-    public class Counter
+    public class Checkout
     {
         private readonly Purchase _currentPurchase = new Purchase();
 

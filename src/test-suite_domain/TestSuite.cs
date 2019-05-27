@@ -9,7 +9,7 @@ namespace SalesTaxes.TestSuite.Domain
         [Fact]
         public void OneBookIsExempt()
         {
-            var counter = new Counter();
+            var counter = new Checkout();
             var article = new Article { Id = 1, Name = "Gone with the wind", Price = 25.0M };
             counter.Scan(article);
             var receipt = counter.EmitReceipt();
