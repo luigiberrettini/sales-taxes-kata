@@ -16,5 +16,17 @@ namespace SalesTaxes.TestSuite.Domain
             var receipt = checkout.EmitReceipt();
             Assert.Equal(article.Price, receipt.Entries.SingleOrDefault()?.Price);
         }
+
+        [Fact]
+        public void TwoBooksAreExempt()
+        {
+            var checkout = new Checkout();
+            var article = new Article { Id = 1, Name = "Gone with the wind", Price = 25.0M };
+            var priceForTwo = article.Price * 2;
+            checkout.Scan(article);
+            checkout.Scan(article);
+            var receipt = checkout.EmitReceipt();
+            Assert.Equal(priceForTwo, receipt.Entries.SingleOrDefault()?.Price);
+        }
     }
 }
