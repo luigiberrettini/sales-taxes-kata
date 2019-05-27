@@ -1,4 +1,4 @@
-﻿namespace SalesTaxes.Domain
+﻿namespace SalesTaxes.Domain.Catalog
 {
     public class Article
     {

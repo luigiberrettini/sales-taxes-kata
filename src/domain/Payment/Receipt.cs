@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using SalesTaxes.Domain.Shopping;
 
-namespace SalesTaxes.Domain
+namespace SalesTaxes.Domain.Payment
 {
     public class Receipt
     {

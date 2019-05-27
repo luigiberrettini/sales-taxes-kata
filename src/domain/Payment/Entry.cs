@@ -1,4 +1,4 @@
-﻿namespace SalesTaxes.Domain
+﻿namespace SalesTaxes.Domain.Payment
 {
     public class Entry
     {

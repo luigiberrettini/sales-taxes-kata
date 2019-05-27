@@ -1,4 +1,7 @@
-﻿namespace SalesTaxes.Domain
+﻿using SalesTaxes.Domain.Catalog;
+using SalesTaxes.Domain.Payment;
+
+namespace SalesTaxes.Domain.Shopping
 {
     public class Checkout
     {

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using SalesTaxes.Domain.Catalog;
 
-namespace SalesTaxes.Domain
+namespace SalesTaxes.Domain.Shopping
 {
     public class Purchase
     {
