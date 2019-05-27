@@ -7,17 +7,16 @@ namespace SalesTaxes.Domain.Shopping
 {
     public class Purchase
     {
-        private readonly IDictionary<Article, Item> _items = new Dictionary<Article, Item>();
+        private readonly IDictionary<int, Item> _items = new Dictionary<int, Item>();
 
         public IEnumerable<Item> Items => _items.Values;
 
         public void Add(Article article)
         {
-            var item = new Item(article);
-            if (_items.ContainsKey(article))
-                _items[article].Quantity++;
+            if (_items.ContainsKey(article.Id))
+                _items[article.Id].Quantity++;
             else
-                _items[article] = new Item(article);
+                _items[article.Id] = new Item(article);
         }
 
         public Receipt BuildReceipt()
