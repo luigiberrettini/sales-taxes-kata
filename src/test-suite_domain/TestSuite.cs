@@ -26,19 +26,27 @@ namespace SalesTaxes.TestSuite.Domain
 
     public class Counter
     {
+        private readonly List<Article> _purchase = new List<Article>();
+
         public void Scan(Article article)
         {
+            _purchase.Add(article);
         }
 
         public Receipt EmitReceipt()
         {
-            throw new System.NotImplementedException();
+            return new Receipt(_purchase);
         }
     }
 
     public class Receipt
     {
-        public IEnumerable<Entry> Entries { get; set; }
+        public IEnumerable<Entry> Entries { get; }
+
+        public Receipt(IEnumerable<Article> purchase)
+        {
+            Entries = purchase.Select(x => new Entry { Price = x.Price });
+        }
     }
 
     public class Entry
