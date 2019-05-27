@@ -16,7 +16,7 @@ var csprojFileInfos = childDirInfos.SelectMany(x => x.GetFiles("*.csproj")).ToLi
 var csprojFiles = csprojFileInfos.Select(x => x.FullName).ToList();
 var toBuildFileInfos = csprojFileInfos.Where(x => x.Directory.GetFiles("*.cs").Length != 0);
 var toBuildFiles = toBuildFileInfos.Select(x => x.FullName).ToList();
-var toTestFiles = toBuildFiles.Where(x => System.IO.File.ReadAllText(x).Contains("\"xunit\"")).ToList();
+var toTestFiles = toBuildFiles.Where(x => x.Contains("test-suite_")).ToList();
 
 var perProjectMsBuildSettings = new Dictionary<string, DotNetCoreMSBuildSettings>();
 
