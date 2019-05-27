@@ -28,5 +28,15 @@ namespace SalesTaxes.TestSuite.Domain
             var receipt = checkout.EmitReceipt();
             Assert.Equal(priceForTwo, receipt.Entries.SingleOrDefault()?.Price);
         }
+
+        [Fact]
+        public void PurchaseGroupsByArticle()
+        {
+            var article = new Article { Id = 1, Name = "Gone with the wind", Price = 25.0M };
+            var purchase = new Purchase();
+            purchase.Add(article);
+            purchase.Add(article);
+            Assert.NotNull(purchase.Articles.SingleOrDefault());
+        }
     }
 }
