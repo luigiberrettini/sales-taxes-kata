@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace SalesTaxes.TestSuite.Domain
+namespace SalesTaxes.Domain
 {
     public class Receipt
     {

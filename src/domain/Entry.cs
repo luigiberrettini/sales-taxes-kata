@@ -1,4 +1,4 @@
-﻿namespace SalesTaxes.TestSuite.Domain
+﻿namespace SalesTaxes.Domain
 {
     public class Entry
     {

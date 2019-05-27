@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SalesTaxes.TestSuite.Domain
+namespace SalesTaxes.Domain
 {
     public class Counter
     {

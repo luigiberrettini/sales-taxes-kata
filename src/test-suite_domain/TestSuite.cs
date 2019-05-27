@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using SalesTaxes.Domain;
+using System.Linq;
 using Xunit;
 
 namespace SalesTaxes.TestSuite.Domain
