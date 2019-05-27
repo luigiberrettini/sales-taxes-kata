@@ -1,6 +1,7 @@
 using SalesTaxes.Domain.Catalog;
 using SalesTaxes.Domain.Payment;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SalesTaxes.Domain.Shopping
 {
@@ -21,7 +22,9 @@ namespace SalesTaxes.Domain.Shopping
 
         public Receipt BuildReceipt()
         {
-            return new Receipt(this);
+            var receipt = new Receipt();
+            Items.ToList().ForEach(x => receipt.Add(new Entry(x.Price * x.Quantity)));
+            return receipt;
         }
     }
 }
