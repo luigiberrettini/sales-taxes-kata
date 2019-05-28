@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SalesTaxes.Domain.Catalog;
 using SalesTaxes.Domain.Shopping;
@@ -19,16 +20,7 @@ namespace SalesTaxes.TestSuite.Domain
         {
             var checkout = new Checkout(new TaxEngine());
             var categories = new[] { Category.Books, Category.Food, Category.Medical };
-            decimal expectedPrice = 0;
-            Enumerable.Range(1, n)
-                .ToList()
-                .ForEach(x =>
-                {
-                    expectedPrice += x * x;
-                    var article = new Article(x, categories[x % 3], Guid.NewGuid().ToString(), x);
-                    for (var i = 0; i < x; i++)
-                        checkout.Scan(article);
-                });
+            var expectedPrice = ScanArticles(n, checkout, categories, price => price);
             var receipt = checkout.EmitReceipt();
             Assert.Equal(expectedPrice, receipt.Entries.Sum(x => x.Price));
         }
@@ -44,17 +36,7 @@ namespace SalesTaxes.TestSuite.Domain
             var checkout = new Checkout(new TaxEngine());
             var exemptCats = new[] { Category.Books, Category.Food, Category.Medical };
             var nonExemptCats = Enum.GetValues(typeof(Category)).Cast<Category>().Except(exemptCats).ToList();
-            decimal ApplyTax(decimal price) => price * 1.1M;
-            decimal expectedPrice = 0;
-            Enumerable.Range(1, n)
-                .ToList()
-                .ForEach(x =>
-                {
-                    expectedPrice += x * ApplyTax(x);
-                    var article = new Article(x, nonExemptCats[x % nonExemptCats.Count], Guid.NewGuid().ToString(), x);
-                    for (var i = 0; i < x; i++)
-                        checkout.Scan(article);
-                });
+            var expectedPrice = ScanArticles(n, checkout, nonExemptCats, price => price * 1.1M);
             var receipt = checkout.EmitReceipt();
             Assert.Equal(expectedPrice, receipt.Entries.Sum(x => x.Price));
         }
@@ -118,6 +100,21 @@ namespace SalesTaxes.TestSuite.Domain
             purchase.Add(article);
             purchase.Add(article);
             Assert.NotNull(purchase.Items.SingleOrDefault());
+        }
+
+        private static decimal ScanArticles(int n, Checkout checkout, IReadOnlyList<Category> categories, Func<decimal, decimal> applyTax)
+        {
+            decimal expectedPrice = 0;
+            Enumerable.Range(1, n)
+                .ToList()
+                .ForEach(x =>
+                {
+                    expectedPrice += x * applyTax(x);
+                    var article = new Article(x, categories[x % categories.Count], Guid.NewGuid().ToString(), x);
+                    for (var i = 0; i < x; i++)
+                        checkout.Scan(article);
+                });
+            return expectedPrice;
         }
     }
 }
