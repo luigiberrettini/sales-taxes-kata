@@ -1,6 +1,6 @@
 using System;
 
-namespace SalesTaxes.Domain.Taxation
+namespace SalesTaxesKata.Domain.Taxation
 {
     public class Tax
     {

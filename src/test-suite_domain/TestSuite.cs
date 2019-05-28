@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SalesTaxes.Domain.Catalog;
-using SalesTaxes.Domain.Shopping;
-using SalesTaxes.Domain.Taxation;
+using SalesTaxesKata.Domain.Catalog;
+using SalesTaxesKata.Domain.Shopping;
+using SalesTaxesKata.Domain.Taxation;
 using Xunit;
 
-namespace SalesTaxes.TestSuite.Domain
+namespace SalesTaxesKata.TestSuite.Domain
 {
     public class TestSuite
     {
