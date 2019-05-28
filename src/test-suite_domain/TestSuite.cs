@@ -87,8 +87,9 @@ namespace SalesTaxesKata.TestSuite.Domain
         {
             var supplier = new Supplier("VAT number", "Name", Country.Ita);
             var article = new Article(1, supplier, Category.Books, Guid.NewGuid().ToString(), 100);
+            var saleCountry = Country.Usa;
             var taxEngine = new TaxEngine();
-            var tax = taxEngine.TaxFor(article);
+            var tax = taxEngine.TaxFor(article, saleCountry);
             Assert.Equal(105, tax.Apply(article.Price));
         }
 
@@ -97,8 +98,9 @@ namespace SalesTaxesKata.TestSuite.Domain
         {
             var supplier = new Supplier("VAT number", "Name", Country.Ita);
             var article = new Article(1, supplier, Category.ArtsAndCrafts, Guid.NewGuid().ToString(), 100);
+            var saleCountry = Country.Usa;
             var taxEngine = new TaxEngine();
-            var tax = taxEngine.TaxFor(article);
+            var tax = taxEngine.TaxFor(article, saleCountry);
             Assert.Equal(115, tax.Apply(article.Price));
         }
 
