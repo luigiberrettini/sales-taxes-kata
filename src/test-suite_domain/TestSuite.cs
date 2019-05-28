@@ -14,7 +14,7 @@ namespace SalesTaxes.TestSuite.Domain
         [InlineData(2)]
         [InlineData(5)]
         [InlineData(10)]
-        public void NoTaxOnCheckoutOfBooks(int n)
+        public void NoTaxOnCheckoutForBooks(int n)
         {
             var checkout = new Checkout();
             decimal expectedPrice = 0;
@@ -41,10 +41,13 @@ namespace SalesTaxes.TestSuite.Domain
             Assert.NotEqual(article.Price, receipt.Entries.SingleOrDefault()?.Price);
         }
 
-        [Fact]
-        public void TaxesAreNotDueForBooks()
+        [Theory]
+        [InlineData(Category.Books)]
+        [InlineData(Category.Food)]
+        [InlineData(Category.Medical)]
+        public void TaxesAreNotDueForExemptCategories(Category category)
         {
-            var article = new Article(1, Category.Books, "Gone with the wind", 112M);
+            var article = new Article(1, category, Guid.NewGuid().ToString(), 112M);
             var taxEngine = new TaxEngine();
             var tax = taxEngine.TaxFor(article);
             Assert.Equal(article.Price, tax.Apply(article.Price));
