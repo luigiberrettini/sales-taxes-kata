@@ -33,6 +33,31 @@ namespace SalesTaxes.TestSuite.Domain
             Assert.Equal(expectedPrice, receipt.Entries.Sum(x => x.Price));
         }
 
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(5)]
+        [InlineData(10)]
+        [InlineData(100)]
+        public void TaxOnCheckoutForNonExemptCategories(int n)
+        {
+            var checkout = new Checkout(new TaxEngine());
+            var exemptCats = new[] { Category.Books, Category.Food, Category.Medical };
+            var nonExemptCats = Enum.GetValues(typeof(Category)).Cast<Category>().Except(exemptCats).ToList();
+            decimal expectedPrice = 0;
+            Enumerable.Range(1, n)
+                .ToList()
+                .ForEach(x =>
+                {
+                    expectedPrice += x * 1.1M * x;
+                    var article = new Article(x, nonExemptCats[x % nonExemptCats.Count], Guid.NewGuid().ToString(), x);
+                    for (var i = 0; i < x; i++)
+                        checkout.Scan(article);
+                });
+            var receipt = checkout.EmitReceipt();
+            Assert.Equal(expectedPrice, receipt.Entries.Sum(x => x.Price));
+        }
+
         [Fact]
         public void TaxOnCheckoutOfOnePerfume()
         {
