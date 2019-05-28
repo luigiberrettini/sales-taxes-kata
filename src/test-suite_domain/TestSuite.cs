@@ -33,6 +33,17 @@ namespace SalesTaxes.TestSuite.Domain
         }
 
         [Fact]
+        public void PurchaseApplyTax()
+        {
+            var article = new Article(1, "Boss bottled", 112M);
+            const decimal taxRate = 10;
+            var tax = new Tax(taxRate);
+            var purchase = new Purchase();
+            purchase.Add(article, tax);
+            Assert.NotEqual(article.Price, purchase.Items.SingleOrDefault()?.Price);
+        }
+
+        [Fact]
         public void PurchaseGroupsByArticle()
         {
             var article = new Article(1, "Gone with the wind", 25.0M);
