@@ -24,12 +24,6 @@ namespace SalesTaxesKata.Domain.Taxation
             };
         }
 
-        public Tax TaxFor(Article article)
-        {
-            return _exemptCategories.Contains(article.Category) ? NoTax : BasicTax;
-
-        }
-
         public Tax TaxFor(Article article, Country saleCountry)
         {
             var tax1 = _exemptCategories.Contains(article.Category) ? NoTax : BasicTax;

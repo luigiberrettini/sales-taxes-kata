@@ -16,7 +16,7 @@ namespace SalesTaxesKata.Domain.Shopping
 
         public void Scan(Article article)
         {
-            _currentPurchase.Add(article, _taxEngine.TaxFor(article));
+            _currentPurchase.Add(article, _taxEngine.TaxFor(article, Country.Abw));
         }
 
         public Receipt EmitReceipt()

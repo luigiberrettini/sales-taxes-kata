@@ -50,7 +50,7 @@ namespace SalesTaxesKata.TestSuite.Domain
         {
             var article = new Article(1, category, Guid.NewGuid().ToString(), 112M);
             var taxEngine = new TaxEngine();
-            var tax = taxEngine.TaxFor(article);
+            var tax = taxEngine.TaxFor(article, Country.Abw);
             Assert.Equal(article.Price, tax.Apply(article.Price));
         }
 
@@ -78,7 +78,7 @@ namespace SalesTaxesKata.TestSuite.Domain
         {
             var article = new Article(1, category, Guid.NewGuid().ToString(), 112M);
             var taxEngine = new TaxEngine();
-            var tax = taxEngine.TaxFor(article);
+            var tax = taxEngine.TaxFor(article, Country.Usa);
             Assert.NotEqual(article.Price, tax.Apply(article.Price));
         }
 
