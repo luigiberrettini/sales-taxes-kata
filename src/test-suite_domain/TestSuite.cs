@@ -19,7 +19,7 @@ namespace SalesTaxesKata.TestSuite.Domain
         [InlineData(100)]
         public void NoTaxOnCheckoutForExemptCategories(int n)
         {
-            var checkout = new Checkout(new TaxEngine());
+            var checkout = new Checkout(Country.Ita, new TaxEngine());
             var categories = new[] { Category.Books, Category.Food, Category.Medical };
             var expectedPrice = ScanArticles(n, checkout, categories, price => price);
             var receipt = checkout.EmitReceipt();
@@ -34,7 +34,7 @@ namespace SalesTaxesKata.TestSuite.Domain
         [InlineData(100)]
         public void TaxOnCheckoutForNonExemptCategories(int n)
         {
-            var checkout = new Checkout(new TaxEngine());
+            var checkout = new Checkout(Country.Ita, new TaxEngine());
             var exemptCats = new[] { Category.Books, Category.Food, Category.Medical };
             var nonExemptCats = Enum.GetValues(typeof(Category)).Cast<Category>().Except(exemptCats).ToList();
             var expectedPrice = ScanArticles(n, checkout, nonExemptCats, price => price * 1.1M);

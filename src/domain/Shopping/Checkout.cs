@@ -10,11 +10,6 @@ namespace SalesTaxesKata.Domain.Shopping
         private readonly TaxEngine _taxEngine;
         private readonly Purchase _currentPurchase = new Purchase();
 
-        public Checkout(TaxEngine taxEngine)
-        {
-            _taxEngine = taxEngine;
-        }
-
         public Checkout(Country country, TaxEngine taxEngine)
         {
             _country = country;
@@ -23,7 +18,7 @@ namespace SalesTaxesKata.Domain.Shopping
 
         public void Scan(Article article)
         {
-            _currentPurchase.Add(article, _taxEngine.TaxFor(article, _country ?? article.Supplier.Country));
+            _currentPurchase.Add(article, _taxEngine.TaxFor(article, _country));
         }
 
         public Receipt EmitReceipt()
