@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SalesTaxesKata.Domain;
 using SalesTaxesKata.Domain.Catalog;
 using SalesTaxesKata.Domain.Shopping;
 using SalesTaxesKata.Domain.Taxation;
@@ -84,8 +85,8 @@ namespace SalesTaxesKata.TestSuite.Domain
         [Fact]
         public void ImportDutyIsDueForAnImportedArticle()
         {
-            var supplier = new Supplier("VAT number", "Name", Country.ITA);
-            var article = new Article(1, Category.ArtsAndCrafts, supplier, Guid.NewGuid().ToString(), 100);
+            var supplier = new Supplier("VAT number", "Name", Country.Ita);
+            var article = new Article(1, supplier, Category.ArtsAndCrafts, Guid.NewGuid().ToString(), 100);
             var taxEngine = new TaxEngine();
             var tax = taxEngine.TaxFor(article);
             Assert.Equal(105, tax.Apply(article.Price));

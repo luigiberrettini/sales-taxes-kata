@@ -9,7 +9,10 @@ namespace SalesTaxesKata.Domain.Taxation
 
         private static Tax BasicTax { get; } = new Tax(10);
 
+        public Tax ImportDuty { get; } = new Tax(5);
+
         private readonly HashSet<Category> _exemptCategories;
+
 
         public TaxEngine()
         {
@@ -23,6 +26,8 @@ namespace SalesTaxesKata.Domain.Taxation
 
         public Tax TaxFor(Article article)
         {
+            if (article.Supplier.Country == Country.Ita)
+                return ImportDuty;
             return _exemptCategories.Contains(article.Category) ? NoTax : BasicTax;
         }
     }
