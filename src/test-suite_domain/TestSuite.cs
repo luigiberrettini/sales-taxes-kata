@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using SalesTaxes.Domain.Catalog;
 using SalesTaxes.Domain.Shopping;
 using SalesTaxes.Domain.Taxation;
@@ -12,15 +13,22 @@ namespace SalesTaxes.TestSuite.Domain
         [InlineData(1)]
         [InlineData(2)]
         [InlineData(5)]
-        [InlineData(100)]
-        public void NoTaxOnCheckoutOfManyIdenticalBooks(int n)
+        [InlineData(10)]
+        public void NoTaxOnCheckoutOfBooks(int n)
         {
             var checkout = new Checkout();
-            var article = new Article(1, Category.Books, "Gone with the wind", 25.0M);
-            var priceForN = article.Price * n;
-            Enumerable.Range(1, n).ToList().ForEach(x => checkout.Scan(article));
+            decimal expectedPrice = 0;
+            Enumerable.Range(1, n)
+                .ToList()
+                .ForEach(x =>
+                {
+                    expectedPrice += x * x;
+                    var article = new Article(x, Category.Books, Guid.NewGuid().ToString(), x);
+                    for (var i = 0; i < x; i++)
+                        checkout.Scan(article);
+                });
             var receipt = checkout.EmitReceipt();
-            Assert.Equal(priceForN, receipt.Entries.SingleOrDefault()?.Price);
+            Assert.Equal(expectedPrice, receipt.Entries.Sum(x => x.Price));
         }
 
         [Fact]
