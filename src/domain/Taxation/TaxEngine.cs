@@ -9,22 +9,21 @@ namespace SalesTaxes.Domain.Taxation
 
         private static Tax BasicTax { get; } = new Tax(10);
 
-        private readonly IDictionary<Category, Tax> _ratesByCategory;
+        private readonly HashSet<Category> _exemptCategories;
 
         public TaxEngine()
         {
-            _ratesByCategory = new Dictionary<Category, Tax>
+            _exemptCategories = new HashSet<Category>
             {
-                [Category.Books] = NoTax,
-                [Category.Food] = NoTax,
-                [Category.Medical] = NoTax,
-                [Category.Beauty] = BasicTax
+                Category.Books,
+                Category.Food,
+                Category.Medical
             };
         }
 
         public Tax TaxFor(Article article)
         {
-            return _ratesByCategory[article.Category];
+            return _exemptCategories.Contains(article.Category) ? NoTax : BasicTax;
         }
     }
 }

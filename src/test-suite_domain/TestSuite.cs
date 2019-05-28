@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SalesTaxes.Domain.Catalog;
 using SalesTaxes.Domain.Shopping;
@@ -17,30 +18,27 @@ namespace SalesTaxes.TestSuite.Domain
         [InlineData(100)]
         public void NoTaxOnCheckoutForExemptCategories(int n)
         {
-            var checkout = new Checkout();
+            var checkout = new Checkout(new TaxEngine());
             var categories = new[] { Category.Books, Category.Food, Category.Medical };
-            decimal expectedPrice = 0;
-            Enumerable.Range(1, n)
-                .ToList()
-                .ForEach(x =>
-                {
-                    expectedPrice += x * x;
-                    var article = new Article(x, categories[x % 3], Guid.NewGuid().ToString(), x);
-                    for (var i = 0; i < x; i++)
-                        checkout.Scan(article);
-                });
+            var expectedPrice = ScanArticles(n, checkout, categories, price => price);
             var receipt = checkout.EmitReceipt();
             Assert.Equal(expectedPrice, receipt.Entries.Sum(x => x.Price));
         }
 
-        [Fact]
-        public void TaxOnCheckoutOfOnePerfume()
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(5)]
+        [InlineData(10)]
+        [InlineData(100)]
+        public void TaxOnCheckoutForNonExemptCategories(int n)
         {
             var checkout = new Checkout(new TaxEngine());
-            var article = new Article(1, Category.Beauty, "Boss bottled", 112M);
-            checkout.Scan(article);
+            var exemptCats = new[] { Category.Books, Category.Food, Category.Medical };
+            var nonExemptCats = Enum.GetValues(typeof(Category)).Cast<Category>().Except(exemptCats).ToList();
+            var expectedPrice = ScanArticles(n, checkout, nonExemptCats, price => price * 1.1M);
             var receipt = checkout.EmitReceipt();
-            Assert.NotEqual(article.Price, receipt.Entries.SingleOrDefault()?.Price);
+            Assert.Equal(expectedPrice, receipt.Entries.Sum(x => x.Price));
         }
 
         [Theory]
@@ -55,10 +53,29 @@ namespace SalesTaxes.TestSuite.Domain
             Assert.Equal(article.Price, tax.Apply(article.Price));
         }
 
-        [Fact]
-        public void TaxesAreDueForPerfumes()
+        [Theory]
+        [InlineData(Category.ArtsAndCrafts)]
+        [InlineData(Category.Automotive)]
+        [InlineData(Category.Baby)]
+        [InlineData(Category.Beauty)]
+        [InlineData(Category.Computers)]
+        [InlineData(Category.Electronics)]
+        [InlineData(Category.Fashion)]
+        [InlineData(Category.Health)]
+        [InlineData(Category.Home)]
+        [InlineData(Category.Household)]
+        [InlineData(Category.Luggage)]
+        [InlineData(Category.Movies)]
+        [InlineData(Category.Music)]
+        [InlineData(Category.PersonalCare)]
+        [InlineData(Category.Pets)]
+        [InlineData(Category.Software)]
+        [InlineData(Category.Sports)]
+        [InlineData(Category.Toys)]
+        [InlineData(Category.VideoGames)]
+        public void TaxesAreDueForNonExemptCategories(Category category)
         {
-            var article = new Article(1, Category.Beauty, "Boss bottled", 112M);
+            var article = new Article(1, category, Guid.NewGuid().ToString(), 112M);
             var taxEngine = new TaxEngine();
             var tax = taxEngine.TaxFor(article);
             Assert.NotEqual(article.Price, tax.Apply(article.Price));
@@ -83,6 +100,21 @@ namespace SalesTaxes.TestSuite.Domain
             purchase.Add(article);
             purchase.Add(article);
             Assert.NotNull(purchase.Items.SingleOrDefault());
+        }
+
+        private static decimal ScanArticles(int n, Checkout checkout, IReadOnlyList<Category> categories, Func<decimal, decimal> applyTax)
+        {
+            decimal expectedPrice = 0;
+            Enumerable.Range(1, n)
+                .ToList()
+                .ForEach(x =>
+                {
+                    expectedPrice += x * applyTax(x);
+                    var article = new Article(x, categories[x % categories.Count], Guid.NewGuid().ToString(), x);
+                    for (var i = 0; i < x; i++)
+                        checkout.Scan(article);
+                });
+            return expectedPrice;
         }
     }
 }
