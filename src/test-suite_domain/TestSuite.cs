@@ -52,7 +52,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var article = new Article(1, supplier, category, Guid.NewGuid().ToString(), 100);
             var taxEngine = new TaxEngine();
             var tax = taxEngine.TaxFor(article, supplier.Country);
-            Assert.Equal(article.Price, tax.Apply(article.Price));
+            Assert.Equal(article.Price, tax.ApplyTo(article.Price));
         }
 
         [Theory]
@@ -81,7 +81,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var article = new Article(1, supplier, category, Guid.NewGuid().ToString(), 100);
             var taxEngine = new TaxEngine();
             var tax = taxEngine.TaxFor(article, Country.Usa);
-            Assert.NotEqual(article.Price, tax.Apply(article.Price));
+            Assert.NotEqual(article.Price, tax.ApplyTo(article.Price));
         }
 
         [Fact]
@@ -92,7 +92,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var saleCountry = Country.Usa;
             var taxEngine = new TaxEngine();
             var tax = taxEngine.TaxFor(article, saleCountry);
-            Assert.Equal(105, tax.Apply(article.Price));
+            Assert.Equal(105, tax.ApplyTo(article.Price));
         }
 
         [Fact]
@@ -103,7 +103,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var saleCountry = Country.Usa;
             var taxEngine = new TaxEngine();
             var tax = taxEngine.TaxFor(article, saleCountry);
-            Assert.Equal(115, tax.Apply(article.Price));
+            Assert.Equal(115, tax.ApplyTo(article.Price));
         }
 
 
@@ -134,23 +134,23 @@ namespace SalesTaxesKata.TestSuite.Domain
         {
             var tax = new BasicTax();
 
-            Assert.Equal(198, tax.Apply(180));
-            Assert.Equal(2, tax.Apply(1.8M));
+            Assert.Equal(198, tax.ApplyTo(180));
+            Assert.Equal(2, tax.ApplyTo(1.8M));
 
-            Assert.Equal(176, tax.Apply(160));
-            Assert.Equal(1.8M, tax.Apply(1.6M));
+            Assert.Equal(176, tax.ApplyTo(160));
+            Assert.Equal(1.8M, tax.ApplyTo(1.6M));
 
-            Assert.Equal(165, tax.Apply(150));
-            Assert.Equal(1.65M, tax.Apply(1.5M));
+            Assert.Equal(165, tax.ApplyTo(150));
+            Assert.Equal(1.65M, tax.ApplyTo(1.5M));
 
-            Assert.Equal(154, tax.Apply(140));
-            Assert.Equal(1.55M, tax.Apply(1.4M));
+            Assert.Equal(154, tax.ApplyTo(140));
+            Assert.Equal(1.55M, tax.ApplyTo(1.4M));
 
-            Assert.Equal(121, tax.Apply(110));
-            Assert.Equal(1.25M, tax.Apply(1.1M));
+            Assert.Equal(121, tax.ApplyTo(110));
+            Assert.Equal(1.25M, tax.ApplyTo(1.1M));
 
-            Assert.Equal(110, tax.Apply(100));
-            Assert.Equal(1.1M, tax.Apply(1));
+            Assert.Equal(110, tax.ApplyTo(100));
+            Assert.Equal(1.1M, tax.ApplyTo(1));
         }
 
         private static decimal ScanArticles(int n, Checkout checkout, IReadOnlyList<Category> categories, Func<decimal, decimal> applyTax)
