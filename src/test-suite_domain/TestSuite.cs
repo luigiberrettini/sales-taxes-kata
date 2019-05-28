@@ -13,7 +13,7 @@ namespace SalesTaxes.TestSuite.Domain
         [InlineData(2)]
         [InlineData(5)]
         [InlineData(100)]
-        public void NBooksAreExempt(int n)
+        public void NoTaxOnCheckoutOfManyIdenticalBooks(int n)
         {
             var checkout = new Checkout();
             var article = new Article(1, "Gone with the wind", 25.0M);
@@ -24,7 +24,7 @@ namespace SalesTaxes.TestSuite.Domain
         }
 
         [Fact]
-        public void OnePerfumeIsTaxed()
+        public void TaxOnCheckoutOfOnePerfume()
         {
             var checkout = new Checkout();
             var article = new Article(1, "Boss bottled", 112M);
@@ -34,7 +34,7 @@ namespace SalesTaxes.TestSuite.Domain
         }
 
         [Fact]
-        public void TaxRateForPerfumesIsNotZero()
+        public void TaxesAreDueForPerfumes()
         {
             var article = new Article(1, "Boss bottled", 112M);
             var taxEngine = new TaxEngine();
