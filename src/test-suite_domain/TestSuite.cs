@@ -1,6 +1,6 @@
-﻿using SalesTaxes.Domain.Catalog;
+﻿using System.Linq;
+using SalesTaxes.Domain.Catalog;
 using SalesTaxes.Domain.Shopping;
-using System.Linq;
 using Xunit;
 
 namespace SalesTaxes.TestSuite.Domain
@@ -20,6 +20,16 @@ namespace SalesTaxes.TestSuite.Domain
             Enumerable.Range(1, n).ToList().ForEach(x => checkout.Scan(article));
             var receipt = checkout.EmitReceipt();
             Assert.Equal(priceForN, receipt.Entries.SingleOrDefault()?.Price);
+        }
+
+        [Fact]
+        public void OnePerfumeIsTaxed()
+        {
+            var checkout = new Checkout();
+            var article = new Article(1, "Boss bottled", 112M);
+            checkout.Scan(article);
+            var receipt = checkout.EmitReceipt();
+            Assert.NotEqual(article.Price, receipt.Entries.SingleOrDefault()?.Price);
         }
 
         [Fact]
