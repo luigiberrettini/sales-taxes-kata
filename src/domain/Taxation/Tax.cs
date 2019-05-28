@@ -1,4 +1,6 @@
-namespace SalesTaxes.Domain.Taxation
+using System;
+
+namespace SalesTaxesKata.Domain.Taxation
 {
     public class Tax
     {
@@ -11,7 +13,9 @@ namespace SalesTaxes.Domain.Taxation
 
         public decimal Apply(decimal price)
         {
-            return price * (100 + _rate) / 100;
+            var taxedPriceCents = price * (100 + _rate);
+            var roundedUpToNearestFive = Math.Ceiling(taxedPriceCents / 5) * 5;
+            return roundedUpToNearestFive / 100;
         }
     }
 }

@@ -1,8 +1,8 @@
-﻿using SalesTaxes.Domain.Catalog;
-using SalesTaxes.Domain.Payment;
-using SalesTaxes.Domain.Taxation;
+﻿using SalesTaxesKata.Domain.Catalog;
+using SalesTaxesKata.Domain.Payment;
+using SalesTaxesKata.Domain.Taxation;
 
-namespace SalesTaxes.Domain.Shopping
+namespace SalesTaxesKata.Domain.Shopping
 {
     public class Checkout
     {

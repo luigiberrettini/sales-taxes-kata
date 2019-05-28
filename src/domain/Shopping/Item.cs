@@ -1,6 +1,6 @@
-using SalesTaxes.Domain.Catalog;
+using SalesTaxesKata.Domain.Catalog;
 
-namespace SalesTaxes.Domain.Shopping
+namespace SalesTaxesKata.Domain.Shopping
 {
     public class Item
     {

@@ -1,4 +1,4 @@
-﻿namespace SalesTaxes.Domain.Catalog
+﻿namespace SalesTaxesKata.Domain.Catalog
 {
     public enum Category
     {

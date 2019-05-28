@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SalesTaxes.Domain.Payment
+namespace SalesTaxesKata.Domain.Payment
 {
     public class Receipt
     {

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SalesTaxes.Domain.Catalog;
-using SalesTaxes.Domain.Shopping;
-using SalesTaxes.Domain.Taxation;
+using SalesTaxesKata.Domain.Catalog;
+using SalesTaxesKata.Domain.Shopping;
+using SalesTaxesKata.Domain.Taxation;
 using Xunit;
 
-namespace SalesTaxes.TestSuite.Domain
+namespace SalesTaxesKata.TestSuite.Domain
 {
     public class TestSuite
     {
@@ -100,6 +100,31 @@ namespace SalesTaxes.TestSuite.Domain
             purchase.Add(article);
             purchase.Add(article);
             Assert.NotNull(purchase.Items.SingleOrDefault());
+        }
+
+        [Fact]
+        public void TaxesAreRoundedUpToNearestFiveCents()
+        {
+            const decimal taxRate = 10;
+            var tax = new Tax(taxRate);
+
+            Assert.Equal(198, tax.Apply(180));
+            Assert.Equal(2, tax.Apply(1.8M));
+
+            Assert.Equal(176, tax.Apply(160));
+            Assert.Equal(1.8M, tax.Apply(1.6M));
+
+            Assert.Equal(165, tax.Apply(150));
+            Assert.Equal(1.65M, tax.Apply(1.5M));
+
+            Assert.Equal(154, tax.Apply(140));
+            Assert.Equal(1.55M, tax.Apply(1.4M));
+
+            Assert.Equal(121, tax.Apply(110));
+            Assert.Equal(1.25M, tax.Apply(1.1M));
+
+            Assert.Equal(110, tax.Apply(100));
+            Assert.Equal(1.1M, tax.Apply(1));
         }
 
         private static decimal ScanArticles(int n, Checkout checkout, IReadOnlyList<Category> categories, Func<decimal, decimal> applyTax)

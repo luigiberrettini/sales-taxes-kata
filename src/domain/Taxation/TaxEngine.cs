@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using SalesTaxes.Domain.Catalog;
+using SalesTaxesKata.Domain.Catalog;
 
-namespace SalesTaxes.Domain.Taxation
+namespace SalesTaxesKata.Domain.Taxation
 {
     public class TaxEngine
     {

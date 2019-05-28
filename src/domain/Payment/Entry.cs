@@ -1,4 +1,4 @@
-﻿namespace SalesTaxes.Domain.Payment
+﻿namespace SalesTaxesKata.Domain.Payment
 {
     public class Entry
     {
