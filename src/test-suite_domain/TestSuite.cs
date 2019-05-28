@@ -14,16 +14,18 @@ namespace SalesTaxes.TestSuite.Domain
         [InlineData(2)]
         [InlineData(5)]
         [InlineData(10)]
-        public void NoTaxOnCheckoutForBooks(int n)
+        [InlineData(100)]
+        public void NoTaxOnCheckoutForExemptCategories(int n)
         {
             var checkout = new Checkout();
+            var categories = new[] { Category.Books, Category.Food, Category.Medical };
             decimal expectedPrice = 0;
             Enumerable.Range(1, n)
                 .ToList()
                 .ForEach(x =>
                 {
                     expectedPrice += x * x;
-                    var article = new Article(x, Category.Books, Guid.NewGuid().ToString(), x);
+                    var article = new Article(x, categories[x % 3], Guid.NewGuid().ToString(), x);
                     for (var i = 0; i < x; i++)
                         checkout.Scan(article);
                 });
