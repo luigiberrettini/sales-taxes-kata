@@ -1,7 +1,8 @@
-using SalesTaxes.Domain.Catalog;
-using SalesTaxes.Domain.Payment;
 using System.Collections.Generic;
 using System.Linq;
+using SalesTaxes.Domain.Catalog;
+using SalesTaxes.Domain.Payment;
+using SalesTaxes.Domain.Taxation;
 
 namespace SalesTaxes.Domain.Shopping
 {
@@ -10,6 +11,19 @@ namespace SalesTaxes.Domain.Shopping
         private readonly IDictionary<int, Item> _items = new Dictionary<int, Item>();
 
         public IEnumerable<Item> Items => _items.Values;
+
+        public void Add(Article article, Tax tax)
+        {
+            if (_items.ContainsKey(article.Id))
+            {
+                _items[article.Id].Quantity++;
+                return;
+            }
+
+            var item = new Item(article);
+            item.Price = tax.Apply(item.Price);
+            _items[article.Id] = item;
+        }
 
         public void Add(Article article)
         {
