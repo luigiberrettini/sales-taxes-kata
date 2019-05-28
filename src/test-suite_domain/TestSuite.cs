@@ -58,16 +58,6 @@ namespace SalesTaxes.TestSuite.Domain
             Assert.Equal(expectedPrice, receipt.Entries.Sum(x => x.Price));
         }
 
-        [Fact]
-        public void TaxOnCheckoutOfOnePerfume()
-        {
-            var checkout = new Checkout(new TaxEngine());
-            var article = new Article(1, Category.Beauty, "Boss bottled", 112M);
-            checkout.Scan(article);
-            var receipt = checkout.EmitReceipt();
-            Assert.NotEqual(article.Price, receipt.Entries.SingleOrDefault()?.Price);
-        }
-
         [Theory]
         [InlineData(Category.Books)]
         [InlineData(Category.Food)]
