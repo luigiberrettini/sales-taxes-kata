@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using SalesTaxes.Domain.Catalog;
 using SalesTaxes.Domain.Shopping;
+using SalesTaxes.Domain.Taxation;
 using Xunit;
 
 namespace SalesTaxes.TestSuite.Domain
