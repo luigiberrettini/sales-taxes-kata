@@ -34,6 +34,15 @@ namespace SalesTaxes.TestSuite.Domain
         }
 
         [Fact]
+        public void TaxesAreNotDueForBooks()
+        {
+            var article = new Article(1, "Gone with the wind", 112M);
+            var taxEngine = new TaxEngine();
+            var tax = taxEngine.TaxFor(article);
+            Assert.Equal(article.Price, tax.Apply(article.Price));
+        }
+
+        [Fact]
         public void TaxesAreDueForPerfumes()
         {
             var article = new Article(1, "Boss bottled", 112M);
