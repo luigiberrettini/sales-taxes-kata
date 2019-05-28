@@ -26,7 +26,7 @@ namespace SalesTaxes.TestSuite.Domain
         [Fact]
         public void TaxOnCheckoutOfOnePerfume()
         {
-            var checkout = new Checkout();
+            var checkout = new Checkout(new TaxEngine());
             var article = new Article(1, "Boss bottled", 112M);
             checkout.Scan(article);
             var receipt = checkout.EmitReceipt();

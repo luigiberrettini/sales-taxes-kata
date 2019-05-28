@@ -6,7 +6,7 @@ namespace SalesTaxes.Domain.Taxation
     {
         public Tax TaxFor(Article article)
         {
-            return new Tax(0);
+            return new Tax(10);
         }
     }
 }
