@@ -48,9 +48,10 @@ namespace SalesTaxesKata.TestSuite.Domain
         [InlineData(Category.Medical)]
         public void TaxesAreNotDueForExemptCategories(Category category)
         {
-            var article = new Article(1, category, Guid.NewGuid().ToString(), 112M);
+            var supplier = new Supplier("VAT number", "Name", Country.Ita);
+            var article = new Article(1, supplier, category, Guid.NewGuid().ToString(), 100);
             var taxEngine = new TaxEngine();
-            var tax = taxEngine.TaxFor(article, Country.Abw);
+            var tax = taxEngine.TaxFor(article, supplier.Country);
             Assert.Equal(article.Price, tax.Apply(article.Price));
         }
 
@@ -76,7 +77,8 @@ namespace SalesTaxesKata.TestSuite.Domain
         [InlineData(Category.VideoGames)]
         public void TaxesAreDueForNonExemptCategories(Category category)
         {
-            var article = new Article(1, category, Guid.NewGuid().ToString(), 112M);
+            var supplier = new Supplier("VAT number", "Name", Country.Ita);
+            var article = new Article(1, supplier, category, Guid.NewGuid().ToString(), 100);
             var taxEngine = new TaxEngine();
             var tax = taxEngine.TaxFor(article, Country.Usa);
             Assert.NotEqual(article.Price, tax.Apply(article.Price));
@@ -108,7 +110,8 @@ namespace SalesTaxesKata.TestSuite.Domain
         [Fact]
         public void PurchaseApplyTax()
         {
-            var article = new Article(1, Category.Beauty, "Boss bottled", 112M);
+            var supplier = new Supplier("VAT number", "Name", Country.Ita);
+            var article = new Article(1, supplier, Category.ArtsAndCrafts, Guid.NewGuid().ToString(), 100);
             const decimal taxRate = 10;
             var tax = new Tax(taxRate);
             var purchase = new Purchase();
@@ -119,7 +122,8 @@ namespace SalesTaxesKata.TestSuite.Domain
         [Fact]
         public void PurchaseGroupsByArticle()
         {
-            var article = new Article(1, Category.Books, "Gone with the wind", 25.0M);
+            var supplier = new Supplier("VAT number", "Name", Country.Ita);
+            var article = new Article(1, supplier, Category.ArtsAndCrafts, Guid.NewGuid().ToString(), 100);
             var purchase = new Purchase();
             purchase.Add(article);
             purchase.Add(article);
@@ -154,12 +158,13 @@ namespace SalesTaxesKata.TestSuite.Domain
         private static decimal ScanArticles(int n, Checkout checkout, IReadOnlyList<Category> categories, Func<decimal, decimal> applyTax)
         {
             decimal expectedPrice = 0;
+            var supplier = new Supplier("VAT number", "Name", Country.Ita);
             Enumerable.Range(1, n)
                 .ToList()
                 .ForEach(x =>
                 {
                     expectedPrice += x * applyTax(x);
-                    var article = new Article(x, categories[x % categories.Count], Guid.NewGuid().ToString(), x);
+                    var article = new Article(x, supplier, categories[x % categories.Count], Guid.NewGuid().ToString(), x);
                     for (var i = 0; i < x; i++)
                         checkout.Scan(article);
                 });
