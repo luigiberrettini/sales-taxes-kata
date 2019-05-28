@@ -55,10 +55,29 @@ namespace SalesTaxes.TestSuite.Domain
             Assert.Equal(article.Price, tax.Apply(article.Price));
         }
 
-        [Fact]
-        public void TaxesAreDueForPerfumes()
+        [Theory]
+        [InlineData(Category.ArtsAndCrafts)]
+        [InlineData(Category.Automotive)]
+        [InlineData(Category.Baby)]
+        [InlineData(Category.Beauty)]
+        [InlineData(Category.Computers)]
+        [InlineData(Category.Electronics)]
+        [InlineData(Category.Fashion)]
+        [InlineData(Category.Health)]
+        [InlineData(Category.Home)]
+        [InlineData(Category.Household)]
+        [InlineData(Category.Luggage)]
+        [InlineData(Category.Movies)]
+        [InlineData(Category.Music)]
+        [InlineData(Category.PersonalCare)]
+        [InlineData(Category.Pets)]
+        [InlineData(Category.Software)]
+        [InlineData(Category.Sports)]
+        [InlineData(Category.Toys)]
+        [InlineData(Category.VideoGames)]
+        public void TaxesAreDueForNonExemptCategories(Category category)
         {
-            var article = new Article(1, Category.Beauty, "Boss bottled", 112M);
+            var article = new Article(1, category, Guid.NewGuid().ToString(), 112M);
             var taxEngine = new TaxEngine();
             var tax = taxEngine.TaxFor(article);
             Assert.NotEqual(article.Price, tax.Apply(article.Price));
