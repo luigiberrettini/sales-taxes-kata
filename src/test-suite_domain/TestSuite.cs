@@ -17,7 +17,7 @@ namespace SalesTaxes.TestSuite.Domain
         [InlineData(100)]
         public void NoTaxOnCheckoutForExemptCategories(int n)
         {
-            var checkout = new Checkout();
+            var checkout = new Checkout(new TaxEngine());
             var categories = new[] { Category.Books, Category.Food, Category.Medical };
             decimal expectedPrice = 0;
             Enumerable.Range(1, n)

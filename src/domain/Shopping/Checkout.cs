@@ -9,10 +9,6 @@ namespace SalesTaxes.Domain.Shopping
         private readonly TaxEngine _taxEngine;
         private readonly Purchase _currentPurchase = new Purchase();
 
-        public Checkout()
-        {
-        }
-
         public Checkout(TaxEngine taxEngine)
         {
             _taxEngine = taxEngine;
@@ -20,11 +16,6 @@ namespace SalesTaxes.Domain.Shopping
 
         public void Scan(Article article)
         {
-            if (_taxEngine == null)
-            {
-                _currentPurchase.Add(article);
-                return;
-            }
             _currentPurchase.Add(article, _taxEngine.TaxFor(article));
         }
 
