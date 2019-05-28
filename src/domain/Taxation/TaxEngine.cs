@@ -5,20 +5,20 @@ namespace SalesTaxes.Domain.Taxation
 {
     public class TaxEngine
     {
-        private IDictionary<Category, decimal> ratesByCategory;
+        private readonly IDictionary<Category, Tax> _ratesByCategory;
 
         public TaxEngine()
         {
-            ratesByCategory = new Dictionary<Category, decimal>
+            _ratesByCategory = new Dictionary<Category, Tax>
             {
-                [Category.Books] = 0,
-                [Category.Beauty] = 10
+                [Category.Books] = new Tax(0),
+                [Category.Beauty] = new Tax(10)
             };
         }
 
         public Tax TaxFor(Article article)
         {
-            return new Tax(ratesByCategory[article.Category]);
+            return _ratesByCategory[article.Category];
         }
     }
 }
