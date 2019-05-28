@@ -1,15 +1,13 @@
-using System;
+﻿using System;
+using SalesTaxesKata.Domain.Catalog;
 
 namespace SalesTaxesKata.Domain.Taxation
 {
-    public class Tax
+    public abstract class Tax
     {
-        public decimal Rate { get; }
+        public abstract decimal Rate { get; }
 
-        public Tax(decimal rate)
-        {
-            Rate = rate;
-        }
+        public abstract bool IsApplicable(Article article, Country saleCountry);
 
         public decimal Apply(decimal price)
         {

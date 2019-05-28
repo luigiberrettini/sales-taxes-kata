@@ -99,7 +99,7 @@ namespace SalesTaxesKata.TestSuite.Domain
         public void BasicTaxAndImportDutyAreDueForImportedComputers()
         {
             var supplier = new Supplier("VAT number", "Name", Country.Ita);
-            var article = new Article(1, supplier, Category.ArtsAndCrafts, Guid.NewGuid().ToString(), 100);
+            var article = new Article(1, supplier, Category.Computers, Guid.NewGuid().ToString(), 100);
             var saleCountry = Country.Usa;
             var taxEngine = new TaxEngine();
             var tax = taxEngine.TaxFor(article, saleCountry);
@@ -112,8 +112,7 @@ namespace SalesTaxesKata.TestSuite.Domain
         {
             var supplier = new Supplier("VAT number", "Name", Country.Ita);
             var article = new Article(1, supplier, Category.ArtsAndCrafts, Guid.NewGuid().ToString(), 100);
-            const decimal taxRate = 10;
-            var tax = new Tax(taxRate);
+            var tax = new BasicTax();
             var purchase = new Purchase();
             purchase.Add(article, tax);
             Assert.NotEqual(article.Price, purchase.Items.SingleOrDefault()?.Price);
@@ -133,8 +132,7 @@ namespace SalesTaxesKata.TestSuite.Domain
         [Fact]
         public void TaxesAreRoundedUpToNearestFiveCents()
         {
-            const decimal taxRate = 10;
-            var tax = new Tax(taxRate);
+            var tax = new BasicTax();
 
             Assert.Equal(198, tax.Apply(180));
             Assert.Equal(2, tax.Apply(1.8M));
