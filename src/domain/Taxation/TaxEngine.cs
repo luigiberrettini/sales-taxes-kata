@@ -26,9 +26,10 @@ namespace SalesTaxesKata.Domain.Taxation
 
         public Tax TaxFor(Article article)
         {
-            if (article.Supplier.Country == Country.Ita)
-                return ImportDuty;
-            return _exemptCategories.Contains(article.Category) ? NoTax : BasicTax;
+            var tax1 = _exemptCategories.Contains(article.Category) ? NoTax : BasicTax;
+            var tax2 = article.Supplier.Country != Country.Ita ? NoTax : ImportDuty;
+            return new Tax(tax1.Rate + tax2.Rate);
+
         }
     }
 }
