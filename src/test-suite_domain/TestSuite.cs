@@ -82,6 +82,16 @@ namespace SalesTaxesKata.TestSuite.Domain
         }
 
         [Fact]
+        public void ImportDutyIsDueForAnImportedArticle()
+        {
+            var supplier = new Supplier("VAT number", "Name", Country.ITA);
+            var article = new Article(1, Category.ArtsAndCrafts, supplier, Guid.NewGuid().ToString(), 100);
+            var taxEngine = new TaxEngine();
+            var tax = taxEngine.TaxFor(article);
+            Assert.Equal(105, tax.Apply(article.Price));
+        }
+
+        [Fact]
         public void PurchaseApplyTax()
         {
             var article = new Article(1, Category.Beauty, "Boss bottled", 112M);
