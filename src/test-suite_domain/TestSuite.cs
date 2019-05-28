@@ -34,6 +34,15 @@ namespace SalesTaxes.TestSuite.Domain
         }
 
         [Fact]
+        public void TaxRateForPerfumesIsNotZero()
+        {
+            var article = new Article(1, "Boss bottled", 112M);
+            var taxEngine = new TaxEngine();
+            var tax = taxEngine.TaxFor(article);
+            Assert.NotEqual(article.Price, tax.Apply(article.Price));
+        }
+
+        [Fact]
         public void PurchaseApplyTax()
         {
             var article = new Article(1, "Boss bottled", 112M);
