@@ -12,6 +12,8 @@ namespace SalesTaxes.Domain.Taxation
             _ratesByCategory = new Dictionary<Category, Tax>
             {
                 [Category.Books] = new Tax(0),
+                [Category.Food] = new Tax(0),
+                [Category.Medical] = new Tax(0),
                 [Category.Beauty] = new Tax(10)
             };
         }
