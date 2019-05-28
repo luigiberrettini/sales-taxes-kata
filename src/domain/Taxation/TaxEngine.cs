@@ -6,7 +6,8 @@ namespace SalesTaxes.Domain.Taxation
     {
         public Tax TaxFor(Article article)
         {
-            return new Tax(10);
+            var rate = article.Category == Category.Beauty ? 10 : 0;
+            return new Tax(rate);
         }
     }
 }
