@@ -44,12 +44,13 @@ namespace SalesTaxes.TestSuite.Domain
             var checkout = new Checkout(new TaxEngine());
             var exemptCats = new[] { Category.Books, Category.Food, Category.Medical };
             var nonExemptCats = Enum.GetValues(typeof(Category)).Cast<Category>().Except(exemptCats).ToList();
+            decimal ApplyTax(decimal price) => price * 1.1M;
             decimal expectedPrice = 0;
             Enumerable.Range(1, n)
                 .ToList()
                 .ForEach(x =>
                 {
-                    expectedPrice += x * 1.1M * x;
+                    expectedPrice += x * ApplyTax(x);
                     var article = new Article(x, nonExemptCats[x % nonExemptCats.Count], Guid.NewGuid().ToString(), x);
                     for (var i = 0; i < x; i++)
                         checkout.Scan(article);
