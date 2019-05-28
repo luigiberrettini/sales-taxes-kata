@@ -83,14 +83,25 @@ namespace SalesTaxesKata.TestSuite.Domain
         }
 
         [Fact]
-        public void ImportDutyIsDueForAnImportedArticle()
+        public void OnlyImportDutyIsDueForImportedBooks()
+        {
+            var supplier = new Supplier("VAT number", "Name", Country.Ita);
+            var article = new Article(1, supplier, Category.Books, Guid.NewGuid().ToString(), 100);
+            var taxEngine = new TaxEngine();
+            var tax = taxEngine.TaxFor(article);
+            Assert.Equal(105, tax.Apply(article.Price));
+        }
+
+        [Fact]
+        public void BasicTaxAndImportDutyAreDueForImportedComputers()
         {
             var supplier = new Supplier("VAT number", "Name", Country.Ita);
             var article = new Article(1, supplier, Category.ArtsAndCrafts, Guid.NewGuid().ToString(), 100);
             var taxEngine = new TaxEngine();
             var tax = taxEngine.TaxFor(article);
-            Assert.Equal(105, tax.Apply(article.Price));
+            Assert.Equal(115, tax.Apply(article.Price));
         }
+
 
         [Fact]
         public void PurchaseApplyTax()
