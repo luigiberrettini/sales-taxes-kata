@@ -14,5 +14,10 @@
             Quantity = quantity;
             TotalPriceWithTaxes = totalPriceWithTaxes;
         }
+
+        public override string ToString()
+        {
+            return $"{Quantity} {Name}: {TotalPriceWithTaxes}";
+        }
     }
 }
