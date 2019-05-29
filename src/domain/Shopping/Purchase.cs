@@ -8,14 +8,21 @@ namespace SalesTaxesKata.Domain.Shopping
 {
     public class Purchase
     {
-        private readonly IDictionary<int, Item> _itemsByArticleId = new Dictionary<int, Item>();
+        private Country _country;
+        private readonly IDictionary<int, Item> _itemsByArticleId;
+
+        public Purchase(Country country)
+        {
+            _country = country;
+            _itemsByArticleId = new Dictionary<int, Item>();
+        }
 
         public void Add(Article article, Tax tax)
         {
             if (_itemsByArticleId.ContainsKey(article.Id))
                 _itemsByArticleId[article.Id].IncreaseQuantity();
             else
-                _itemsByArticleId[article.Id] = new Item(article, tax);
+                _itemsByArticleId[article.Id] = new Item(article, _country, tax);
         }
 
         public Receipt BuildReceipt()

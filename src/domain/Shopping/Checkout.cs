@@ -8,12 +8,13 @@ namespace SalesTaxesKata.Domain.Shopping
     {
         private readonly Country _country;
         private readonly TaxEngine _taxEngine;
-        private readonly Purchase _currentPurchase = new Purchase();
+        private readonly Purchase _currentPurchase;
 
         public Checkout(Country country, TaxEngine taxEngine)
         {
             _country = country;
             _taxEngine = taxEngine;
+            _currentPurchase = new Purchase(_country);
         }
 
         public void Scan(Article article)

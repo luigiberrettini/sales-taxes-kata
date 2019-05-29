@@ -17,7 +17,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var supplier = new Supplier("VAT number", "Name", Country.Ita);
             var article = new Article(1, supplier, Category.ArtsAndCrafts, Guid.NewGuid().ToString(), 100);
             var tax = new BasicTax();
-            var purchase = new Purchase();
+            var purchase = new Purchase(supplier.Country);
             purchase.Add(article, tax);
             var receipt = purchase.BuildReceipt();
             Assert.NotEqual(article.Price, receipt.Total);
@@ -29,7 +29,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var supplier = new Supplier("VAT number", "Name", Country.Ita);
             var article = new Article(1, supplier, Category.ArtsAndCrafts, Guid.NewGuid().ToString(), 100);
             var tax = new NoTax();
-            var purchase = new Purchase();
+            var purchase = new Purchase(supplier.Country);
             purchase.Add(article, tax);
             purchase.Add(article, tax);
             var receipt = purchase.BuildReceipt();
@@ -42,7 +42,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var supplier = new Supplier("VAT number", "Name", Country.Ita);
             var articleName = Guid.NewGuid().ToString();
             var article = new Article(1, supplier, Category.ArtsAndCrafts, articleName, 100);
-            var purchase = new Purchase();
+            var purchase = new Purchase(supplier.Country);
             var tax = new BasicTax();
             purchase.Add(article, tax);
             var receipt = purchase.BuildReceipt();
@@ -70,7 +70,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             localPurchase.Add(article, tax);
             var localReceipt = localPurchase.BuildReceipt();
 
-            var importedPurchase = new Purchase(Country.Usa);
+            var importedPurchase = new Purchase(Country.Ita);
             importedPurchase.Add(article, tax);
             importedPurchase.Add(article, tax);
             var importedReceipt = importedPurchase.BuildReceipt();

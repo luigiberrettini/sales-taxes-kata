@@ -16,7 +16,7 @@ namespace SalesTaxesKata.Domain.Shopping
 
         public int Quantity { get; private set; }
 
-        public Item(Article article, Tax tax)
+        public Item(Article article, Country country, Tax tax)
         {
             Id = article.Id;
             Name = article.Name;
