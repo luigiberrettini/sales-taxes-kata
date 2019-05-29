@@ -6,7 +6,7 @@ namespace SalesTaxesKata.Domain.Payment
 {
     public class Receipt
     {
-        public IList<Entry> Entries { get; }
+        public IReadOnlyCollection<Entry> Entries { get; }
 
         public decimal SalesTaxes { get; private set; }
 
@@ -21,7 +21,7 @@ namespace SalesTaxesKata.Domain.Payment
         public void Add(Item item)
         {
             var totalPriceWithTaxes = item.UnitPriceAfterTaxes * item.Quantity;
-            Entries.Add(new Entry(item.Name, item.Quantity, totalPriceWithTaxes));
+            ((IList<Entry>)Entries).Add(new Entry(item.Name, item.Quantity, totalPriceWithTaxes));
             SalesTaxes += (item.UnitPriceAfterTaxes - item.UnitPriceBeforeTaxes) * item.Quantity;
         }
     }
