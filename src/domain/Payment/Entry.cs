@@ -2,11 +2,11 @@
 {
     public class Entry
     {
-        public string Name { get; set; }
+        public string Name { get; }
 
-        public int Quantity { get; set; }
+        public int Quantity { get; }
 
-        public decimal TotalPriceWithTaxes { get; set; }
+        public decimal TotalPriceWithTaxes { get; }
 
         public Entry(string name, int quantity, decimal totalPriceWithTaxes)
         {
