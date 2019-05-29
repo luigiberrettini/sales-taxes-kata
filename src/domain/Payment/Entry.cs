@@ -1,12 +1,25 @@
-﻿namespace SalesTaxesKata.Domain.Payment
-{
-    public class Entry
-    {
-        public decimal Price { get; set; }
+﻿using SalesTaxesKata.Domain.Shopping;
 
-        public Entry(decimal price)
+namespace SalesTaxesKata.Domain.Payment
+{
+    public struct Entry
+    {
+        public string Name { get; }
+
+        public int Quantity { get; }
+
+        public decimal TotalPriceWithTaxes { get; }
+
+        public Entry(Item item)
         {
-            Price = price;
+            Name = item.IsImported ? $"imported {item.Name}" : item.Name;
+            Quantity = item.Quantity;
+            TotalPriceWithTaxes = item.UnitPriceAfterTaxes * item.Quantity;
+        }
+
+        public override string ToString()
+        {
+            return $"{Quantity} {Name}: {TotalPriceWithTaxes}";
         }
     }
 }

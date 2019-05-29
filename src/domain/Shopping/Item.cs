@@ -1,17 +1,32 @@
 using SalesTaxesKata.Domain.Catalog;
+using SalesTaxesKata.Domain.Taxation;
 
 namespace SalesTaxesKata.Domain.Shopping
 {
     public class Item
     {
-        public decimal Price { get; set; }
+        public int Id { get; }
 
-        public int Quantity { get; set; }
+        public string Name { get; }
 
-        public Item(Article article)
+        public decimal UnitPriceBeforeTaxes { get; }
+
+        public decimal UnitPriceAfterTaxes { get; }
+
+        public int Quantity { get; private set; }
+
+        public bool IsImported { get; }
+
+        public Item(Country saleCountry, Article article, Tax tax)
         {
-            Price = article.Price;
+            Id = article.Id;
+            Name = article.Name;
+            UnitPriceBeforeTaxes = article.Price;
+            UnitPriceAfterTaxes = tax.ApplyTo(article.Price);
             Quantity = 1;
+            IsImported = saleCountry != article.Supplier.Country;
         }
+
+        public void IncreaseQuantity() => Quantity++;
     }
 }

@@ -9,7 +9,7 @@ namespace SalesTaxesKata.Domain.Taxation
 
         public abstract bool IsApplicable(Article article, Country saleCountry);
 
-        public decimal ApplyTo(decimal price)
+        public virtual decimal ApplyTo(decimal price)
         {
             var taxedPriceCents = price * (100 + Rate);
             var roundedUpToNearestFive = Math.Ceiling(taxedPriceCents / 5) * 5;

@@ -18,5 +18,10 @@ namespace SalesTaxesKata.Domain.Taxation
         {
             return ExemptCategories.Contains(article.Category) && article.Supplier.Country == saleCountry; ;
         }
+
+        public override decimal ApplyTo(decimal price)
+        {
+            return price;
+        }
     }
 }

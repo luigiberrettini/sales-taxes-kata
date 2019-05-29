@@ -26,7 +26,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var checkout = new Checkout(checkoutCountry, new TaxEngine());
             var supplier = new Supplier("VAT number", "Name", supplierCountry);
             var nonTaxedPrice = NonTaxedPriceOnNArticles(n, checkout, supplier, categories);
-            Assert.Equal(expectedTax.ApplyTo(nonTaxedPrice), checkout.EmitReceipt().Entries.Sum(x => x.Price));
+            Assert.Equal(expectedTax.ApplyTo(nonTaxedPrice), checkout.EmitReceipt().Entries.Sum(x => x.TotalPriceWithTaxes));
 
         }
 
@@ -46,7 +46,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var checkout = new Checkout(checkoutCountry, new TaxEngine());
             var supplier = new Supplier("VAT number", "Name", supplierCountry);
             var nonTaxedPrice = NonTaxedPriceOnNArticles(n, checkout, supplier, categories);
-            Assert.Equal(expectedTax.ApplyTo(nonTaxedPrice), checkout.EmitReceipt().Entries.Sum(x => x.Price));
+            Assert.Equal(expectedTax.ApplyTo(nonTaxedPrice), checkout.EmitReceipt().Entries.Sum(x => x.TotalPriceWithTaxes));
         }
 
         [Theory]
@@ -64,7 +64,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var checkout = new Checkout(checkoutCountry, new TaxEngine());
             var supplier = new Supplier("VAT number", "Name", supplierCountry);
             var nonTaxedPrice = NonTaxedPriceOnNArticles(n, checkout, supplier, categories);
-            Assert.Equal(expectedTax.ApplyTo(nonTaxedPrice), checkout.EmitReceipt().Entries.Sum(x => x.Price));
+            Assert.Equal(expectedTax.ApplyTo(nonTaxedPrice), checkout.EmitReceipt().Entries.Sum(x => x.TotalPriceWithTaxes));
 
         }
 
@@ -84,7 +84,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var checkout = new Checkout(checkoutCountry, new TaxEngine());
             var supplier = new Supplier("VAT number", "Name", supplierCountry);
             var nonTaxedPrice = NonTaxedPriceOnNArticles(n, checkout, supplier, categories);
-            Assert.Equal(expectedTax.ApplyTo(nonTaxedPrice), checkout.EmitReceipt().Entries.Sum(x => x.Price));
+            Assert.Equal(expectedTax.ApplyTo(nonTaxedPrice), checkout.EmitReceipt().Entries.Sum(x => x.TotalPriceWithTaxes));
         }
 
         private static decimal NonTaxedPriceOnNArticles(int n, Checkout checkout, Supplier supplier, IReadOnlyList<Category> categories)
