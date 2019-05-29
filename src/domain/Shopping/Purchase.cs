@@ -21,16 +21,7 @@ namespace SalesTaxesKata.Domain.Shopping
             }
 
             var unitPriceAfterTaxes = tax.ApplyTo(article.Price);
-            var item = new Item(article, unitPriceAfterTaxes);
-            _items[article.Id] = item;
-        }
-
-        public void Add(Article article)
-        {
-            if (_items.ContainsKey(article.Id))
-                _items[article.Id].IncreaseQuantity();
-            else
-                _items[article.Id] = new Item(article, article.Price);
+            _items[article.Id] = new Item(article, unitPriceAfterTaxes);
         }
 
         public Receipt BuildReceipt()

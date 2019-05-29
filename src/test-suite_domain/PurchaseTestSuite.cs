@@ -27,9 +27,10 @@ namespace SalesTaxesKata.TestSuite.Domain
         {
             var supplier = new Supplier("VAT number", "Name", Country.Ita);
             var article = new Article(1, supplier, Category.ArtsAndCrafts, Guid.NewGuid().ToString(), 100);
+            var tax = new NoTax();
             var purchase = new Purchase();
-            purchase.Add(article);
-            purchase.Add(article);
+            purchase.Add(article, tax);
+            purchase.Add(article, tax);
             Assert.NotNull(purchase.Items.SingleOrDefault());
         }
 
