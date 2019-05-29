@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using SalesTaxesKata.Domain.Shopping;
 
 namespace SalesTaxesKata.Domain.Payment
@@ -22,6 +24,15 @@ namespace SalesTaxesKata.Domain.Payment
         {
             ((IList<Entry>)Entries).Add(new Entry(item));
             SalesTaxes += (item.UnitPriceAfterTaxes - item.UnitPriceBeforeTaxes) * item.Quantity;
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            Entries.ToList().ForEach(x => sb.AppendLine(x.ToString()));
+            sb.AppendLine($"SalesTaxes: {SalesTaxes}");
+            sb.AppendLine($"Total: {Total}");
+            return sb.ToString();
         }
     }
 }
