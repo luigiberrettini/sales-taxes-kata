@@ -1,4 +1,6 @@
-﻿namespace SalesTaxesKata.Domain.Payment
+﻿using SalesTaxesKata.Domain.Shopping;
+
+namespace SalesTaxesKata.Domain.Payment
 {
     public struct Entry
     {
@@ -8,11 +10,11 @@
 
         public decimal TotalPriceWithTaxes { get; }
 
-        public Entry(string name, int quantity, decimal totalPriceWithTaxes)
+        public Entry(Item item)
         {
-            Name = name;
-            Quantity = quantity;
-            TotalPriceWithTaxes = totalPriceWithTaxes;
+            Name = item.IsImported ? $"imported {item.Name}" : item.Name;
+            Quantity = item.Quantity;
+            TotalPriceWithTaxes = item.UnitPriceAfterTaxes * item.Quantity;
         }
 
         public override string ToString()

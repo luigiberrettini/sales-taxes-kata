@@ -20,8 +20,7 @@ namespace SalesTaxesKata.Domain.Payment
 
         public void Add(Item item)
         {
-            var totalPriceWithTaxes = item.UnitPriceAfterTaxes * item.Quantity;
-            ((IList<Entry>)Entries).Add(new Entry(item.Name, item.Quantity, totalPriceWithTaxes));
+            ((IList<Entry>)Entries).Add(new Entry(item));
             SalesTaxes += (item.UnitPriceAfterTaxes - item.UnitPriceBeforeTaxes) * item.Quantity;
         }
     }
