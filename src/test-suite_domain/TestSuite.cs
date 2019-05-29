@@ -132,25 +132,29 @@ namespace SalesTaxesKata.TestSuite.Domain
         [Fact]
         public void TaxesAreRoundedUpToNearestFiveCents()
         {
-            var tax = new BasicTax();
+            var basicTax = new BasicTax();
+            Assert.Equal(2, basicTax.ApplyTo(1.8M));
+            Assert.Equal(1.8M, basicTax.ApplyTo(1.6M));
+            Assert.Equal(1.65M, basicTax.ApplyTo(1.5M));
+            Assert.Equal(1.55M, basicTax.ApplyTo(1.4M));
+            Assert.Equal(1.25M, basicTax.ApplyTo(1.1M));
+            Assert.Equal(1.1M, basicTax.ApplyTo(1));
 
-            Assert.Equal(198, tax.ApplyTo(180));
-            Assert.Equal(2, tax.ApplyTo(1.8M));
+            var importDuty = new ImportDuty();
+            Assert.Equal(1.9M, importDuty.ApplyTo(1.8M));
+            Assert.Equal(1.3M, importDuty.ApplyTo(1.2M));
+            Assert.Equal(1.05M, importDuty.ApplyTo(1));
+            Assert.Equal(0.85M, importDuty.ApplyTo(0.8M));
+            Assert.Equal(0.25M, importDuty.ApplyTo(0.2M));
+            Assert.Equal(21, importDuty.ApplyTo(20));
 
-            Assert.Equal(176, tax.ApplyTo(160));
-            Assert.Equal(1.8M, tax.ApplyTo(1.6M));
-
-            Assert.Equal(165, tax.ApplyTo(150));
-            Assert.Equal(1.65M, tax.ApplyTo(1.5M));
-
-            Assert.Equal(154, tax.ApplyTo(140));
-            Assert.Equal(1.55M, tax.ApplyTo(1.4M));
-
-            Assert.Equal(121, tax.ApplyTo(110));
-            Assert.Equal(1.25M, tax.ApplyTo(1.1M));
-
-            Assert.Equal(110, tax.ApplyTo(100));
-            Assert.Equal(1.1M, tax.ApplyTo(1));
+            var basicTaxAndImportDuty = new BasicTaxAndImportDuty();
+            Assert.Equal(1.9M, basicTaxAndImportDuty.ApplyTo(1.65M));
+            Assert.Equal(1.8M, basicTaxAndImportDuty.ApplyTo(1.53M));
+            Assert.Equal(3.45M, basicTaxAndImportDuty.ApplyTo(3M));
+            Assert.Equal(1.65M, basicTaxAndImportDuty.ApplyTo(1.43M));
+            Assert.Equal(1.55M, basicTaxAndImportDuty.ApplyTo(1.31M));
+            Assert.Equal(2.3M, basicTaxAndImportDuty.ApplyTo(2));
         }
 
         private static decimal ScanArticles(int n, Checkout checkout, IReadOnlyList<Category> categories, Func<decimal, decimal> applyTax)
