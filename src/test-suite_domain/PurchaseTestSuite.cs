@@ -12,7 +12,7 @@ namespace SalesTaxesKata.TestSuite.Domain
     public class PurchaseTestSuite
     {
         [Fact]
-        public void PurchaseApplyTax()
+        public void PurchaseAppliesTax()
         {
             var supplier = new Supplier("VAT number", "Name", Country.Ita);
             var article = new Article(1, supplier, Category.ArtsAndCrafts, Guid.NewGuid().ToString(), 100);
@@ -54,6 +54,16 @@ namespace SalesTaxesKata.TestSuite.Domain
             Assert.Equal(expectedEntry, entry);
             Assert.Equal(priceWithTaxes - article.Price, receipt.SalesTaxes);
             Assert.Equal(expectedEntry.TotalPriceWithTaxes, receipt.Total);
+        }
+
+        [Fact]
+        public void EntryToStringFormatIsQuantityNameColonPrice()
+        {
+            const string name = "Article ABC";
+            const int quantity = 5;
+            const decimal totalPriceWithTaxes = 32.54M;
+            var entry = new Entry(name, quantity, totalPriceWithTaxes);
+            Assert.Equal($"{quantity} {name}: {totalPriceWithTaxes}", entry.ToString());
         }
     }
 }
