@@ -57,13 +57,28 @@ namespace SalesTaxesKata.TestSuite.Domain
         }
 
         [Fact]
-        public void EntryToStringFormatIsQuantityNameColonPrice()
+        public void EntryToStringFormatIsQuantityImportedIfApplicableNameColonPrice()
         {
-            const string name = "Article ABC";
-            const int quantity = 5;
-            const decimal totalPriceWithTaxes = 32.54M;
-            var entry = new Entry(name, quantity, totalPriceWithTaxes);
-            Assert.Equal($"{quantity} {name}: {totalPriceWithTaxes}", entry.ToString());
+            var supplier = new Supplier("VAT number", "Name", Country.Usa);
+            const string articleName = "Article ABC";
+            const decimal articlePrice = 32.54M;
+            var article = new Article(1, supplier, Category.ArtsAndCrafts, articleName, articlePrice);
+            var tax = new NoTax();
+
+            var localPurchase = new Purchase(Country.Usa);
+            localPurchase.Add(article, tax);
+            localPurchase.Add(article, tax);
+            var localReceipt = localPurchase.BuildReceipt();
+
+            var importedPurchase = new Purchase(Country.Usa);
+            importedPurchase.Add(article, tax);
+            importedPurchase.Add(article, tax);
+            var importedReceipt = importedPurchase.BuildReceipt();
+
+            const int quantity = 2;
+            const decimal totalPriceWithTaxes = quantity * articlePrice;
+            Assert.Equal($"{quantity} {articleName}: {totalPriceWithTaxes}", localReceipt.Entries.Single().ToString());
+            Assert.Equal($"{quantity} imported {articleName}: {totalPriceWithTaxes}", importedReceipt.Entries.Single().ToString());
         }
     }
 }
