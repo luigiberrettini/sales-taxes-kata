@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using SalesTaxesKata.Domain.Catalog;
+using SalesTaxesKata.Domain.Taxation;
 
 namespace SalesTaxesKata.Domain.Shopping
 {
@@ -15,12 +16,12 @@ namespace SalesTaxesKata.Domain.Shopping
 
         public int Quantity { get; private set; }
 
-        public Item(Article article, decimal unitPriceAfterTaxes)
+        public Item(Article article, Tax tax)
         {
             Id = article.Id;
             Name = article.Name;
             UnitPriceBeforeTaxes = article.Price;
-            UnitPriceAfterTaxes = unitPriceAfterTaxes;
+            UnitPriceAfterTaxes = tax.ApplyTo(article.Price);
             Quantity = 1;
         }
 

@@ -15,13 +15,9 @@ namespace SalesTaxesKata.Domain.Shopping
         public void Add(Article article, Tax tax)
         {
             if (_items.ContainsKey(article.Id))
-            {
                 _items[article.Id].IncreaseQuantity();
-                return;
-            }
-
-            var unitPriceAfterTaxes = tax.ApplyTo(article.Price);
-            _items[article.Id] = new Item(article, unitPriceAfterTaxes);
+            else
+                _items[article.Id] = new Item(article, tax);
         }
 
         public Receipt BuildReceipt()
