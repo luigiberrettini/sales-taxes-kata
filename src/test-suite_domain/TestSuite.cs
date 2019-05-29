@@ -46,7 +46,7 @@ namespace SalesTaxesKata.TestSuite.Domain
         [InlineData(Category.Books)]
         [InlineData(Category.Food)]
         [InlineData(Category.Medical)]
-        public void TaxesAreNotDueForExemptCategories(Category category)
+        public void NoTaxesAreDueForLocalArticlesWithExemptCategories(Category category)
         {
             var supplier = new Supplier("VAT number", "Name", Country.Ita);
             var article = new Article(1, supplier, category, Guid.NewGuid().ToString(), 100);
@@ -75,13 +75,13 @@ namespace SalesTaxesKata.TestSuite.Domain
         [InlineData(Category.Sports)]
         [InlineData(Category.Toys)]
         [InlineData(Category.VideoGames)]
-        public void TaxesAreDueForNonExemptCategories(Category category)
+        public void BasicTaxIsDueForLocalArticlesWithNonExemptCategory(Category category)
         {
             var supplier = new Supplier("VAT number", "Name", Country.Ita);
             var article = new Article(1, supplier, category, Guid.NewGuid().ToString(), 100);
             var taxEngine = new TaxEngine();
-            var tax = taxEngine.TaxFor(article, Country.Usa);
-            Assert.NotEqual(article.Price, tax.ApplyTo(article.Price));
+            var tax = taxEngine.TaxFor(article, supplier.Country);
+            Assert.Equal(new BasicTax().ApplyTo(article.Price), tax.ApplyTo(article.Price));
         }
 
         [Fact]
