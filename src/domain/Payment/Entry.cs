@@ -1,6 +1,6 @@
 ﻿namespace SalesTaxesKata.Domain.Payment
 {
-    public class Entry
+    public struct Entry
     {
         public string Name { get; }
 
