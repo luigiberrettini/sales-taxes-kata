@@ -10,7 +10,7 @@ namespace SalesTaxesKata.Domain.Shopping
     {
         private readonly IDictionary<int, Item> _items = new Dictionary<int, Item>();
 
-        public IEnumerable<Item> Items => _items.Values;
+        public IReadOnlyCollection<Item> Items => (IReadOnlyCollection<Item>)_items.Values;
 
         public void Add(Article article, Tax tax)
         {
