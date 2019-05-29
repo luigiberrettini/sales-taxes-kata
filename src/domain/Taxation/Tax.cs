@@ -1,19 +1,17 @@
-using System;
+﻿using System;
+using SalesTaxesKata.Domain.Catalog;
 
 namespace SalesTaxesKata.Domain.Taxation
 {
-    public class Tax
+    public abstract class Tax
     {
-        private readonly decimal _rate;
+        public abstract decimal Rate { get; }
 
-        public Tax(decimal rate)
-        {
-            _rate = rate;
-        }
+        public abstract bool IsApplicable(Article article, Country saleCountry);
 
-        public decimal Apply(decimal price)
+        public decimal ApplyTo(decimal price)
         {
-            var taxedPriceCents = price * (100 + _rate);
+            var taxedPriceCents = price * (100 + Rate);
             var roundedUpToNearestFive = Math.Ceiling(taxedPriceCents / 5) * 5;
             return roundedUpToNearestFive / 100;
         }

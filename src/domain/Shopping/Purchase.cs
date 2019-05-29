@@ -21,7 +21,7 @@ namespace SalesTaxesKata.Domain.Shopping
             }
 
             var item = new Item(article);
-            item.Price = tax.Apply(item.Price);
+            item.Price = tax.ApplyTo(item.Price);
             _items[article.Id] = item;
         }
 
