@@ -19,11 +19,12 @@ namespace SalesTaxesKata.TestSuite.Domain
             var tax = new BasicTax();
             var purchase = new Purchase();
             purchase.Add(article, tax);
-            Assert.NotEqual(article.Price, purchase.Items.SingleOrDefault()?.UnitPriceAfterTaxes);
+            var receipt = purchase.BuildReceipt();
+            Assert.NotEqual(article.Price, receipt.Total);
         }
 
         [Fact]
-        public void PurchaseGroupsByArticle()
+        public void ReceiptGroupsByArticle()
         {
             var supplier = new Supplier("VAT number", "Name", Country.Ita);
             var article = new Article(1, supplier, Category.ArtsAndCrafts, Guid.NewGuid().ToString(), 100);
@@ -31,7 +32,8 @@ namespace SalesTaxesKata.TestSuite.Domain
             var purchase = new Purchase();
             purchase.Add(article, tax);
             purchase.Add(article, tax);
-            Assert.NotNull(purchase.Items.SingleOrDefault());
+            var receipt = purchase.BuildReceipt();
+            Assert.Single(receipt.Entries);
         }
 
         [Fact]

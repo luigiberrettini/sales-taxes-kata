@@ -8,22 +8,21 @@ namespace SalesTaxesKata.Domain.Shopping
 {
     public class Purchase
     {
-        private readonly IDictionary<int, Item> _items = new Dictionary<int, Item>();
-
-        public IReadOnlyCollection<Item> Items => (IReadOnlyCollection<Item>)_items.Values;
+        private readonly IDictionary<int, Item> _itemsByArticleId = new Dictionary<int, Item>();
 
         public void Add(Article article, Tax tax)
         {
-            if (_items.ContainsKey(article.Id))
-                _items[article.Id].IncreaseQuantity();
+            if (_itemsByArticleId.ContainsKey(article.Id))
+                _itemsByArticleId[article.Id].IncreaseQuantity();
             else
-                _items[article.Id] = new Item(article, tax);
+                _itemsByArticleId[article.Id] = new Item(article, tax);
         }
 
         public Receipt BuildReceipt()
         {
             var receipt = new Receipt();
-            Items.ToList().ForEach(receipt.Add);
+            var items = _itemsByArticleId.Values.ToList();
+            items.ForEach(receipt.Add);
             return receipt;
         }
     }
