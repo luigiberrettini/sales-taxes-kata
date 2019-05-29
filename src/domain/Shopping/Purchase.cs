@@ -16,27 +16,27 @@ namespace SalesTaxesKata.Domain.Shopping
         {
             if (_items.ContainsKey(article.Id))
             {
-                _items[article.Id].Quantity++;
+                _items[article.Id].IncreaseQuantity();
                 return;
             }
 
-            var item = new Item(article);
-            item.Price = tax.ApplyTo(item.Price);
+            var unitPriceAfterTaxes = tax.ApplyTo(article.Price);
+            var item = new Item(article, unitPriceAfterTaxes);
             _items[article.Id] = item;
         }
 
         public void Add(Article article)
         {
             if (_items.ContainsKey(article.Id))
-                _items[article.Id].Quantity++;
+                _items[article.Id].IncreaseQuantity();
             else
-                _items[article.Id] = new Item(article);
+                _items[article.Id] = new Item(article, article.Price);
         }
 
         public Receipt BuildReceipt()
         {
             var receipt = new Receipt();
-            Items.ToList().ForEach(x => receipt.Add(new Entry(x.Price * x.Quantity)));
+            Items.ToList().ForEach(receipt.Add);
             return receipt;
         }
     }

@@ -2,11 +2,17 @@
 {
     public class Entry
     {
-        public decimal Price { get; set; }
+        public string Name { get; set; }
 
-        public Entry(decimal price)
+        public int Quantity { get; set; }
+
+        public decimal TotalPriceWithTaxes { get; set; }
+
+        public Entry(string name, int quantity, decimal totalPriceWithTaxes)
         {
-            Price = price;
+            Name = name;
+            Quantity = quantity;
+            TotalPriceWithTaxes = totalPriceWithTaxes;
         }
     }
 }

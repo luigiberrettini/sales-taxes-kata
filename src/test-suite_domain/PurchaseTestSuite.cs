@@ -19,7 +19,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var tax = new BasicTax();
             var purchase = new Purchase();
             purchase.Add(article, tax);
-            Assert.NotEqual(article.Price, purchase.Items.SingleOrDefault()?.Price);
+            Assert.NotEqual(article.Price, purchase.Items.SingleOrDefault()?.UnitPriceAfterTaxes);
         }
 
         [Fact]
@@ -46,13 +46,13 @@ namespace SalesTaxesKata.TestSuite.Domain
             var entry = receipt.Entries.Single();
 
             const int quantity = 1;
-            var taxedPrice = tax.ApplyTo(article.Price);
-            var expectedEntry = new Entry(articleName, quantity, taxedPrice);
+            var priceWithTaxes = tax.ApplyTo(article.Price);
+            var expectedEntry = new Entry(articleName, quantity, priceWithTaxes);
             Assert.Equal(expectedEntry.Quantity, entry.Quantity);
             Assert.Equal(expectedEntry.Name, entry.Name);
-            Assert.Equal(expectedEntry.Price, entry.Price);
-            Assert.Equal(expectedEntry.Price, receipt.SalesTaxes);
-            Assert.Equal(expectedEntry.Price, receipt.Total);
+            Assert.Equal(expectedEntry.TotalPriceWithTaxes, entry.TotalPriceWithTaxes);
+            Assert.Equal(priceWithTaxes - article.Price, receipt.SalesTaxes);
+            Assert.Equal(expectedEntry.TotalPriceWithTaxes, receipt.Total);
         }
     }
 }

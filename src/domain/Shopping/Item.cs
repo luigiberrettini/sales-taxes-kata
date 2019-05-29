@@ -1,17 +1,29 @@
+using System.Collections.Generic;
 using SalesTaxesKata.Domain.Catalog;
 
 namespace SalesTaxesKata.Domain.Shopping
 {
     public class Item
     {
-        public decimal Price { get; set; }
+        public int Id { get; }
 
-        public int Quantity { get; set; }
+        public string Name { get; }
 
-        public Item(Article article)
+        public decimal UnitPriceBeforeTaxes { get; }
+
+        public decimal UnitPriceAfterTaxes { get; }
+
+        public int Quantity { get; private set; }
+
+        public Item(Article article, decimal unitPriceAfterTaxes)
         {
-            Price = article.Price;
+            Id = article.Id;
+            Name = article.Name;
+            UnitPriceBeforeTaxes = article.Price;
+            UnitPriceAfterTaxes = unitPriceAfterTaxes;
             Quantity = 1;
         }
+
+        public void IncreaseQuantity() => Quantity++;
     }
 }
