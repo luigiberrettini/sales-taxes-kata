@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SalesTaxesKata.Domain.Catalog
+namespace SalesTaxesKata.Domain.Sales
 {
     public class Catalog
     {

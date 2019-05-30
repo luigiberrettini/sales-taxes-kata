@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using SalesTaxesKata.Domain;
-using SalesTaxesKata.Domain.Catalog;
+using SalesTaxesKata.Domain.Sales;
 using SalesTaxesKata.Domain.Shopping;
 using SalesTaxesKata.Domain.Taxation;
 using Xunit;

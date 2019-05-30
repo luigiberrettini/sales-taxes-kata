@@ -1,6 +1,6 @@
 ﻿using System;
 using SalesTaxesKata.Domain;
-using SalesTaxesKata.Domain.Catalog;
+using SalesTaxesKata.Domain.Sales;
 using SalesTaxesKata.Domain.Taxation;
 using Xunit;
 

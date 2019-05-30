@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using SalesTaxesKata.Domain.Catalog;
+using SalesTaxesKata.Domain.Sales;
 
 namespace SalesTaxesKata.Domain.Taxation
 {

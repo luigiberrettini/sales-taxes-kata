@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using SalesTaxesKata.Domain.Catalog;
 using SalesTaxesKata.Domain.Payment;
+using SalesTaxesKata.Domain.Sales;
 using SalesTaxesKata.Domain.Taxation;
 
 namespace SalesTaxesKata.Domain.Shopping
@@ -8,11 +8,11 @@ namespace SalesTaxesKata.Domain.Shopping
     public class Checkout
     {
         private readonly Country _country;
-        private readonly Catalog.Catalog _catalog;
+        private readonly Catalog _catalog;
         private readonly TaxEngine _taxEngine;
         private readonly Purchase _currentPurchase;
 
-        public Checkout(Country country, Catalog.Catalog catalog, TaxEngine taxEngine)
+        public Checkout(Country country, Catalog catalog, TaxEngine taxEngine)
         {
             _country = country;
             _taxEngine = taxEngine;

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using SalesTaxesKata.Domain.Catalog;
 using SalesTaxesKata.Domain.Payment;
+using SalesTaxesKata.Domain.Sales;
 using SalesTaxesKata.Domain.Taxation;
 
 namespace SalesTaxesKata.Domain.Shopping

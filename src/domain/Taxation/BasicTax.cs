@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using SalesTaxesKata.Domain.Catalog;
+using SalesTaxesKata.Domain.Sales;
 
 namespace SalesTaxesKata.Domain.Taxation
 {
