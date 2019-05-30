@@ -12,9 +12,8 @@ namespace SalesTaxesKata.Domain.Taxation
 
         public virtual decimal ApplyTo(decimal price)
         {
-            var taxedPriceCents = price * (100 + Rate);
-            var roundedUpToNearestFive = Math.Ceiling(taxedPriceCents / 5) * 5;
-            return roundedUpToNearestFive / 100;
+            var taxedPrice = price * (100 + Rate) / 100;
+            return Math.Ceiling(taxedPrice * 20) / 20;
         }
     }
 }
