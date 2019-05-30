@@ -17,6 +17,11 @@ namespace SalesTaxesKata.Domain.Shopping
             _currentPurchase = new Purchase(_country);
         }
 
+        public void Scan(Good article)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void Scan(Article article)
         {
             _currentPurchase.Add(article, _taxEngine.TaxFor(article, _country));

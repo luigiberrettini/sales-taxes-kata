@@ -90,7 +90,7 @@ namespace SalesTaxesKata.TestSuite.Domain
         [Fact]
         public void CheckoutRetrievesArticleFromGood()
         {
-            var supplier = new Supplier("VAT number", "Name", supplierAndCheckoutCountry);
+            var supplier = new Supplier("VAT number", "Name", Country.Ita);
             var article = new Article(1, supplier, Category.Books, Guid.NewGuid().ToString(), 10.37M);
             var catalog = new Catalog();
             catalog.Add(article);
@@ -117,6 +117,23 @@ namespace SalesTaxesKata.TestSuite.Domain
                     nonTaxedPrice += x * x;
                 });
             return nonTaxedPrice;
+        }
+    }
+
+    public class Catalog
+    {
+        private readonly IDictionary<string, Article> _articles;
+
+        public IReadOnlyCollection<Article> Articles => (IReadOnlyCollection<Article>)_articles.Values;
+
+        public Catalog()
+        {
+            _articles = new Dictionary<string, Article>();
+        }
+
+        public void Add(Article article)
+        {
+            _articles.Add(article.Name, article);
         }
     }
 }
