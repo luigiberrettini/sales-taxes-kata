@@ -1,20 +1,29 @@
-﻿using System;
-using SalesTaxesKata.Domain.Geo;
+﻿using SalesTaxesKata.Domain.Geo;
 using SalesTaxesKata.Domain.Sales;
 
 namespace SalesTaxesKata.Domain.Taxation
 {
     public abstract class Tax
     {
+        private readonly Rounding _rounding;
+
         public abstract decimal Rate { get; }
 
         public abstract bool IsApplicable(Article article, Country saleCountry);
 
-        public virtual decimal ApplyTo(decimal price)
+        protected Tax(Rounding rounding)
         {
-            var taxedPriceCents = price * (100 + Rate);
-            var roundedUpToNearestFive = Math.Ceiling(taxedPriceCents / 5) * 5;
-            return roundedUpToNearestFive / 100;
+            _rounding = rounding;
+        }
+
+        public decimal ApplyTo(decimal price)
+        {
+            return _rounding.Round(TaxedPrice(price));
+        }
+
+        private decimal TaxedPrice(decimal price)
+        {
+            return price * (100 + Rate) / 100;
         }
     }
 }

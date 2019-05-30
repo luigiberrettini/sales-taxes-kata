@@ -15,6 +15,10 @@ namespace SalesTaxesKata.Domain.Taxation
 
         public override decimal Rate => 10M;
 
+        public BasicTax() : base(new UpToFiveCentsRounding())
+        {
+        }
+
         public override bool IsApplicable(Article article, Country saleCountry)
         {
             return !ExemptCategories.Contains(article.Category);

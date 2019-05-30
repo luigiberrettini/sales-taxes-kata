@@ -11,7 +11,7 @@ namespace SalesTaxesKata.Domain.Taxation
 
         public override decimal Rate { get; }
 
-        public BasicTaxAndImportDuty()
+        public BasicTaxAndImportDuty() : base(new UpToFiveCentsRounding())
         {
             _taxes = new List<Tax>
             {
