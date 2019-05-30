@@ -55,7 +55,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             Assert.Equal(articleName, entry.Name);
             Assert.Equal(quantity, entry.Quantity);
             Assert.Equal(priceWithTaxes, entry.TotalPriceWithTaxes);
-            Assert.Equal(priceWithTaxes - article.Price, receipt.SalesTaxes);
+            Assert.Equal(priceWithTaxes - article.Price, receipt.Taxes);
             Assert.Equal(priceWithTaxes, receipt.Total);
         }
 
@@ -105,7 +105,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var sb = new StringBuilder();
             sb.AppendLine(entry1.ToString());
             sb.AppendLine(entry2.ToString());
-            sb.AppendLine($"SalesTaxes: {receipt.SalesTaxes}");
+            sb.AppendLine($"SalesTaxes: {receipt.Taxes}");
             sb.AppendLine($"Total: {receipt.Total}");
             Assert.Equal(sb.ToString(), receipt.ToString());
 
