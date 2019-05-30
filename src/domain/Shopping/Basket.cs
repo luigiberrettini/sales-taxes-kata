@@ -33,18 +33,14 @@ namespace SalesTaxesKata.Domain.Shopping
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
-                return false;
-            return ReferenceEquals(this, obj) ||
-                   obj.GetType() == this.GetType() && Equals((Basket)obj);
+            return !(obj is null) &&
+                (ReferenceEquals(this, obj) || obj.GetType() == this.GetType() && Equals((Basket)obj));
         }
 
         public bool Equals(Basket other)
         {
-            if (ReferenceEquals(null, other))
-                return false;
-            return ReferenceEquals(this, other) ||
-                   Goods.SequenceEqual(other.Goods);
+            return !(other is null) &&
+                (ReferenceEquals(this, other) || Goods.SequenceEqual(other.Goods));
         }
     }
 }
