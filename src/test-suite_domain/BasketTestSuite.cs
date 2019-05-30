@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using SalesTaxesKata.Domain.Shopping;
+using Xunit;
 
 namespace SalesTaxesKata.TestSuite.Domain
 {
@@ -11,7 +12,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             const int quantity = 2;
             const decimal shelfPrice = 10M;
             var builtGood = new Good(name, quantity, shelfPrice);
-            var importedGood = Good.FromString($"{quantity} {name} at {shelfPrice}");
+            var importedGood = Good.FromString($"{quantity} {name} at {shelfPrice:F2}");
             Assert.Equal(builtGood, importedGood);
         }
     }
