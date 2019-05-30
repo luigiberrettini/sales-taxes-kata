@@ -18,12 +18,12 @@ namespace SalesTaxesKata.Domain.Shopping
 
         public Basket()
         {
-            Goods = new List<Good>();
+            Goods = new HashSet<Good>();
         }
 
         public void Add(Good good)
         {
-            ((IList<Good>)Goods).Add(good);
+            ((HashSet<Good>)Goods).Add(good);
         }
 
         public override int GetHashCode()
