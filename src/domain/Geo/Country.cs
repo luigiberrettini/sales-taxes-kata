@@ -1,4 +1,4 @@
-﻿namespace SalesTaxesKata.Domain
+﻿namespace SalesTaxesKata.Domain.Geo
 {
     public class Country
     {

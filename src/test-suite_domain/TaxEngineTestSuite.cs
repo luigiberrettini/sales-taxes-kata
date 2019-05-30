@@ -1,5 +1,6 @@
 ﻿using System;
 using SalesTaxesKata.Domain;
+using SalesTaxesKata.Domain.Geo;
 using SalesTaxesKata.Domain.Sales;
 using SalesTaxesKata.Domain.Taxation;
 using Xunit;

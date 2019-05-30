@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using SalesTaxesKata.Domain;
+using SalesTaxesKata.Domain.Geo;
 using SalesTaxesKata.Domain.Payment;
 using SalesTaxesKata.Domain.Sales;
 using SalesTaxesKata.Domain.Shopping;

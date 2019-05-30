@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using SalesTaxesKata.Domain.Geo;
 using SalesTaxesKata.Domain.Payment;
 using SalesTaxesKata.Domain.Sales;
 using SalesTaxesKata.Domain.Taxation;
