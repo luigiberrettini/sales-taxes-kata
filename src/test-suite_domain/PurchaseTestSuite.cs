@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-using SalesTaxesKata.Domain;
 using SalesTaxesKata.Domain.Geo;
 using SalesTaxesKata.Domain.Payment;
 using SalesTaxesKata.Domain.Sales;
@@ -16,10 +15,9 @@ namespace SalesTaxesKata.TestSuite.Domain
         [Fact]
         public void PurchaseAppliesTax()
         {
-            var supplier = new Supplier("VAT number", "Name", Country.Ita);
-            var article = new Article(1, supplier, Category.ArtsAndCrafts, Guid.NewGuid().ToString(), 100);
+            var article = new Article(1, Country.Ita, Category.ArtsAndCrafts, Guid.NewGuid().ToString(), 100);
             var tax = new BasicTax();
-            var purchase = new Purchase(supplier.Country);
+            var purchase = new Purchase(article.SupplierCountry);
             purchase.Add(article, tax);
             var receipt = purchase.BuildReceipt();
             Assert.NotEqual(article.Price, receipt.Total);
@@ -28,10 +26,9 @@ namespace SalesTaxesKata.TestSuite.Domain
         [Fact]
         public void ReceiptGroupsByArticle()
         {
-            var supplier = new Supplier("VAT number", "Name", Country.Ita);
-            var article = new Article(1, supplier, Category.ArtsAndCrafts, Guid.NewGuid().ToString(), 100);
+            var article = new Article(1, Country.Ita, Category.ArtsAndCrafts, Guid.NewGuid().ToString(), 100);
             var tax = new NoTax();
-            var purchase = new Purchase(supplier.Country);
+            var purchase = new Purchase(article.SupplierCountry);
             purchase.Add(article, tax);
             purchase.Add(article, tax);
             var receipt = purchase.BuildReceipt();
@@ -41,10 +38,9 @@ namespace SalesTaxesKata.TestSuite.Domain
         [Fact]
         public void ReceiptForOneArticleMatchesItsData()
         {
-            var supplier = new Supplier("VAT number", "Name", Country.Ita);
             var articleName = Guid.NewGuid().ToString();
-            var article = new Article(1, supplier, Category.ArtsAndCrafts, articleName, 100);
-            var purchase = new Purchase(supplier.Country);
+            var article = new Article(1, Country.Ita, Category.ArtsAndCrafts, articleName, 100);
+            var purchase = new Purchase(article.SupplierCountry);
             var tax = new BasicTax();
             purchase.Add(article, tax);
             var receipt = purchase.BuildReceipt();
@@ -62,10 +58,9 @@ namespace SalesTaxesKata.TestSuite.Domain
         [Fact]
         public void EntryToStringFormatIsQuantityImportedIfApplicableNameColonPrice()
         {
-            var supplier = new Supplier("VAT number", "Name", Country.Usa);
             const string articleName = "Article ABC";
             const decimal articlePrice = 32.54M;
-            var article = new Article(1, supplier, Category.ArtsAndCrafts, articleName, articlePrice);
+            var article = new Article(1, Country.Usa, Category.ArtsAndCrafts, articleName, articlePrice);
             var tax = new NoTax();
 
             var localPurchase = new Purchase(Country.Usa);
@@ -87,13 +82,12 @@ namespace SalesTaxesKata.TestSuite.Domain
         [Fact]
         public void ReceiptToStringHasEntriesSalesTaxesAndTotal()
         {
-            var supplier = new Supplier("VAT number", "Name", Country.Usa);
             const string article1Name = "Article ABC";
             const decimal article1Price = 32.54M;
             const string article2Name = "Article ABC";
             const decimal article2Price = 32.54M;
-            var article1 = new Article(1, supplier, Category.ArtsAndCrafts, article1Name, article1Price);
-            var article2 = new Article(1, supplier, Category.Baby, article2Name, article2Price);
+            var article1 = new Article(1, Country.Usa, Category.ArtsAndCrafts, article1Name, article1Price);
+            var article2 = new Article(1, Country.Usa, Category.Baby, article2Name, article2Price);
             var receipt = new Receipt();
             var noTax = new NoTax();
             var item1 = new Item(Country.Ita, article1, noTax);

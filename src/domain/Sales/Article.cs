@@ -1,10 +1,12 @@
-﻿namespace SalesTaxesKata.Domain.Sales
+﻿using SalesTaxesKata.Domain.Geo;
+
+namespace SalesTaxesKata.Domain.Sales
 {
     public class Article
     {
         public int Id { get; }
 
-        public Supplier Supplier { get; set; }
+        public Country SupplierCountry { get; set; }
 
         public Category Category { get; }
 
@@ -12,10 +14,10 @@
 
         public decimal Price { get; }
 
-        public Article(int id, Supplier supplier, Category category, string name, decimal price)
+        public Article(int id, Country supplierCountry, Category category, string name, decimal price)
         {
             Id = id;
-            Supplier = supplier;
+            SupplierCountry = supplierCountry;
             Category = category;
             Name = name;
             Price = price;

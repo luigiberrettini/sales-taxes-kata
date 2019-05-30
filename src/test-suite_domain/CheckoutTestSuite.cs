@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SalesTaxesKata.Domain;
 using SalesTaxesKata.Domain.Geo;
 using SalesTaxesKata.Domain.Sales;
 using SalesTaxesKata.Domain.Shopping;
@@ -26,8 +25,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var expectedTax = new NoTax();
             var catalog = new Catalog();
             var checkout = new Checkout(checkoutCountry, catalog, new TaxEngine());
-            var supplier = new Supplier("VAT number", "Name", supplierCountry);
-            var nonTaxedPrice = NonTaxedPriceOnNArticles(n, catalog, checkout, supplier, categories);
+            var nonTaxedPrice = NonTaxedPriceOnNArticles(n, catalog, checkout, supplierCountry, categories);
             Assert.Equal(expectedTax.ApplyTo(nonTaxedPrice), checkout.EmitReceipt().Entries.Sum(x => x.TotalPriceWithTaxes));
 
         }
@@ -47,8 +45,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var expectedTax = new BasicTax();
             var catalog = new Catalog();
             var checkout = new Checkout(checkoutCountry, catalog, new TaxEngine());
-            var supplier = new Supplier("VAT number", "Name", supplierCountry);
-            var nonTaxedPrice = NonTaxedPriceOnNArticles(n, catalog, checkout, supplier, categories);
+            var nonTaxedPrice = NonTaxedPriceOnNArticles(n, catalog, checkout, supplierCountry, categories);
             Assert.Equal(expectedTax.ApplyTo(nonTaxedPrice), checkout.EmitReceipt().Entries.Sum(x => x.TotalPriceWithTaxes));
         }
 
@@ -66,8 +63,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var expectedTax = new ImportDuty();
             var catalog = new Catalog();
             var checkout = new Checkout(checkoutCountry, catalog, new TaxEngine());
-            var supplier = new Supplier("VAT number", "Name", supplierCountry);
-            var nonTaxedPrice = NonTaxedPriceOnNArticles(n, catalog, checkout, supplier, categories);
+            var nonTaxedPrice = NonTaxedPriceOnNArticles(n, catalog, checkout, supplierCountry, categories);
             Assert.Equal(expectedTax.ApplyTo(nonTaxedPrice), checkout.EmitReceipt().Entries.Sum(x => x.TotalPriceWithTaxes));
 
         }
@@ -87,20 +83,18 @@ namespace SalesTaxesKata.TestSuite.Domain
             var expectedTax = new BasicTaxAndImportDuty();
             var catalog = new Catalog();
             var checkout = new Checkout(checkoutCountry, catalog, new TaxEngine());
-            var supplier = new Supplier("VAT number", "Name", supplierCountry);
-            var nonTaxedPrice = NonTaxedPriceOnNArticles(n, catalog, checkout, supplier, categories);
+            var nonTaxedPrice = NonTaxedPriceOnNArticles(n, catalog, checkout, supplierCountry, categories);
             Assert.Equal(expectedTax.ApplyTo(nonTaxedPrice), checkout.EmitReceipt().Entries.Sum(x => x.TotalPriceWithTaxes));
         }
 
         [Fact]
         public void CheckoutRetrievesArticleFromGood()
         {
-            var supplier = new Supplier("VAT number", "Name", Country.Ita);
-            var article = new Article(1, supplier, Category.Books, Guid.NewGuid().ToString(), 10.37M);
+            var article = new Article(1, Country.Ita, Category.Books, Guid.NewGuid().ToString(), 10.37M);
             var catalog = new Catalog();
             catalog.Add(article);
             var good = new Good(article.Name, 11, article.Price);
-            var checkout = new Checkout(supplier.Country, catalog, new TaxEngine());
+            var checkout = new Checkout(article.SupplierCountry, catalog, new TaxEngine());
             checkout.Scan(good);
             var receipt = checkout.EmitReceipt();
             var entry = receipt.Entries.Single();
@@ -109,8 +103,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             Assert.Equal(good.ShelfPrice * good.Quantity, entry.TotalPriceWithTaxes);
         }
 
-        private static decimal NonTaxedPriceOnNArticles(int n, Catalog catalog, Checkout checkout, Supplier supplier,
-            IReadOnlyList<Category> categories)
+        private static decimal NonTaxedPriceOnNArticles(int n, Catalog catalog, Checkout checkout, Country supplierCountry, IReadOnlyList<Category> categories)
         {
             decimal nonTaxedPrice = 0;
             Enumerable.Range(1, n)
@@ -118,7 +111,7 @@ namespace SalesTaxesKata.TestSuite.Domain
                 .ForEach(x =>
                 {
                     var price = x;
-                    var article = new Article(x, supplier, categories[x % categories.Count], Guid.NewGuid().ToString(), price);
+                    var article = new Article(x, supplierCountry, categories[x % categories.Count], Guid.NewGuid().ToString(), price);
                     catalog.Add(article);
                     var quantity = x;
                     var good = new Good(article.Name, quantity, price);

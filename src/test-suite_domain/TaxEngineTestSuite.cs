@@ -1,5 +1,4 @@
 ﻿using System;
-using SalesTaxesKata.Domain;
 using SalesTaxesKata.Domain.Geo;
 using SalesTaxesKata.Domain.Sales;
 using SalesTaxesKata.Domain.Taxation;
@@ -15,10 +14,9 @@ namespace SalesTaxesKata.TestSuite.Domain
         [InlineData(Category.Medical)]
         public void NoTaxesForLocalExemptArticles(Category category)
         {
-            var supplier = new Supplier("VAT number", "Name", Country.Ita);
-            var article = new Article(1, supplier, category, Guid.NewGuid().ToString(), 100);
+            var article = new Article(1, Country.Ita, category, Guid.NewGuid().ToString(), 100);
             var taxEngine = new TaxEngine();
-            var tax = taxEngine.TaxFor(article, supplier.Country);
+            var tax = taxEngine.TaxFor(article, article.SupplierCountry);
             Assert.Equal(article.Price, tax.ApplyTo(article.Price));
         }
 
@@ -44,10 +42,9 @@ namespace SalesTaxesKata.TestSuite.Domain
         [InlineData(Category.VideoGames)]
         public void BasicTaxForLocalNonExemptArticles(Category category)
         {
-            var supplier = new Supplier("VAT number", "Name", Country.Ita);
-            var article = new Article(1, supplier, category, Guid.NewGuid().ToString(), 100);
+            var article = new Article(1, Country.Ita, category, Guid.NewGuid().ToString(), 100);
             var taxEngine = new TaxEngine();
-            var tax = taxEngine.TaxFor(article, supplier.Country);
+            var tax = taxEngine.TaxFor(article, article.SupplierCountry);
             Assert.Equal(new BasicTax().ApplyTo(article.Price), tax.ApplyTo(article.Price));
         }
 
@@ -57,8 +54,7 @@ namespace SalesTaxesKata.TestSuite.Domain
         [InlineData(Category.Medical)]
         public void ImportDutyForImportedExemptArticles(Category category)
         {
-            var supplier = new Supplier("VAT number", "Name", Country.Ita);
-            var article = new Article(1, supplier, category, Guid.NewGuid().ToString(), 100);
+            var article = new Article(1, Country.Ita, category, Guid.NewGuid().ToString(), 100);
             var taxEngine = new TaxEngine();
             var tax = taxEngine.TaxFor(article, Country.Usa);
             Assert.Equal(new ImportDuty().ApplyTo(article.Price), tax.ApplyTo(article.Price));
@@ -86,8 +82,7 @@ namespace SalesTaxesKata.TestSuite.Domain
         [InlineData(Category.VideoGames)]
         public void BasicTaxAndImportDutyForImportedNonExemptArticles(Category category)
         {
-            var supplier = new Supplier("VAT number", "Name", Country.Ita);
-            var article = new Article(1, supplier, category, Guid.NewGuid().ToString(), 100);
+            var article = new Article(1, Country.Ita, category, Guid.NewGuid().ToString(), 100);
             var taxEngine = new TaxEngine();
             var tax = taxEngine.TaxFor(article, Country.Usa);
             Assert.Equal(new BasicTaxAndImportDuty().ApplyTo(article.Price), tax.ApplyTo(article.Price));

@@ -9,7 +9,7 @@ namespace SalesTaxesKata.Domain.Taxation
 
         public override bool IsApplicable(Article article, Country saleCountry)
         {
-            return article.Supplier.Country != saleCountry;
+            return article.SupplierCountry != saleCountry;
         }
     }
 }

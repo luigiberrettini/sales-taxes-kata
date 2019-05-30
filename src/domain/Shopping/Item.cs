@@ -25,7 +25,7 @@ namespace SalesTaxesKata.Domain.Shopping
             UnitPriceBeforeTaxes = article.Price;
             UnitPriceAfterTaxes = tax.ApplyTo(article.Price);
             Quantity = 1;
-            IsImported = saleCountry != article.Supplier.Country;
+            IsImported = saleCountry != article.SupplierCountry;
         }
 
         public void IncreaseQuantity() => Quantity++;

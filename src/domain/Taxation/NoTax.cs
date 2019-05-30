@@ -17,7 +17,7 @@ namespace SalesTaxesKata.Domain.Taxation
 
         public override bool IsApplicable(Article article, Country saleCountry)
         {
-            return ExemptCategories.Contains(article.Category) && article.Supplier.Country == saleCountry; ;
+            return ExemptCategories.Contains(article.Category) && article.SupplierCountry == saleCountry; ;
         }
 
         public override decimal ApplyTo(decimal price)
