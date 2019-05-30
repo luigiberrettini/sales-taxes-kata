@@ -29,14 +29,14 @@ namespace SalesTaxesKata.Domain.Shopping
                 .ForEach(x => Scan(article));
         }
 
-        public void Scan(Article article)
-        {
-            _currentPurchase.Add(article, _taxEngine.TaxFor(article, _country));
-        }
-
         public Receipt EmitReceipt()
         {
             return _currentPurchase.BuildReceipt();
+        }
+
+        private void Scan(Article article)
+        {
+            _currentPurchase.Add(article, _taxEngine.TaxFor(article, _country));
         }
     }
 }
