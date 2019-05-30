@@ -9,36 +9,36 @@ namespace SalesTaxesKata.TestSuite.Domain
         public void BasicTaxIsRoundedUpToFiveCents()
         {
             var basicTax = new BasicTax();
-            Assert.Equal(2, basicTax.ApplyTo(1.8M));
-            Assert.Equal(1.8M, basicTax.ApplyTo(1.6M));
-            Assert.Equal(1.65M, basicTax.ApplyTo(1.5M));
-            Assert.Equal(1.55M, basicTax.ApplyTo(1.4M));
-            Assert.Equal(1.25M, basicTax.ApplyTo(1.1M));
-            Assert.Equal(1.1M, basicTax.ApplyTo(1));
+            Assert.Equal(1.91M + 0.20M, basicTax.ApplyTo(1.91M));
+            Assert.Equal(1.51M + 0.20M, basicTax.ApplyTo(1.51M));
+            Assert.Equal(1.50M + 0.15M, basicTax.ApplyTo(1.50M));
+            Assert.Equal(1.42M + 0.15M, basicTax.ApplyTo(1.42M));
+            Assert.Equal(1.09M + 0.15M, basicTax.ApplyTo(1.09M));
+            Assert.Equal(1.00M + 0.10M, basicTax.ApplyTo(1.00M));
         }
 
         [Fact]
         public void BasicTaxAndImportDutyIsRoundedUpToFiveCents()
         {
             var basicTaxAndImportDuty = new BasicTaxAndImportDuty();
-            Assert.Equal(1.9M, basicTaxAndImportDuty.ApplyTo(1.65M));
-            Assert.Equal(1.8M, basicTaxAndImportDuty.ApplyTo(1.53M));
-            Assert.Equal(3.45M, basicTaxAndImportDuty.ApplyTo(3M));
-            Assert.Equal(1.65M, basicTaxAndImportDuty.ApplyTo(1.43M));
-            Assert.Equal(1.55M, basicTaxAndImportDuty.ApplyTo(1.31M));
-            Assert.Equal(2.3M, basicTaxAndImportDuty.ApplyTo(2));
+            Assert.Equal(25.30M + 3.80M, basicTaxAndImportDuty.ApplyTo(25.30M));
+            Assert.Equal(25.01M + 3.80M, basicTaxAndImportDuty.ApplyTo(25.01M));
+            Assert.Equal(25.00M + 3.75M, basicTaxAndImportDuty.ApplyTo(25.00M));
+            Assert.Equal(24.95M + 3.75M, basicTaxAndImportDuty.ApplyTo(24.95M));
+            Assert.Equal(24.70M + 3.75M, basicTaxAndImportDuty.ApplyTo(24.70M));
+            Assert.Equal(24.00M + 3.60M, basicTaxAndImportDuty.ApplyTo(24.00M));
         }
 
         [Fact]
         public void ImportDutyIsRoundedUpToFiveCents()
         {
             var importDuty = new ImportDuty();
-            Assert.Equal(1.9M, importDuty.ApplyTo(1.8M));
-            Assert.Equal(1.3M, importDuty.ApplyTo(1.2M));
-            Assert.Equal(1.05M, importDuty.ApplyTo(1));
-            Assert.Equal(0.85M, importDuty.ApplyTo(0.8M));
-            Assert.Equal(0.25M, importDuty.ApplyTo(0.2M));
-            Assert.Equal(21, importDuty.ApplyTo(20));
+            Assert.Equal(3.82M + 0.20M, importDuty.ApplyTo(3.82M));
+            Assert.Equal(3.02M + 0.20M, importDuty.ApplyTo(3.02M));
+            Assert.Equal(3.00M + 0.15M, importDuty.ApplyTo(3.00M));
+            Assert.Equal(2.84M + 0.15M, importDuty.ApplyTo(2.84M));
+            Assert.Equal(2.18M + 0.15M, importDuty.ApplyTo(2.18M));
+            Assert.Equal(2.00M + 0.10M, importDuty.ApplyTo(2.00M));
         }
     }
 }
