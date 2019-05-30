@@ -23,7 +23,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var supplierCountry = checkoutCountry;
             var categories = new[] { Category.Books, Category.Food, Category.Medical };
             var expectedTax = new NoTax();
-            var checkout = new Checkout(checkoutCountry, new TaxEngine());
+            var checkout = new Checkout(checkoutCountry, new Catalog(), new TaxEngine());
             var supplier = new Supplier("VAT number", "Name", supplierCountry);
             var nonTaxedPrice = NonTaxedPriceOnNArticles(n, checkout, supplier, categories);
             Assert.Equal(expectedTax.ApplyTo(nonTaxedPrice), checkout.EmitReceipt().Entries.Sum(x => x.TotalPriceWithTaxes));
@@ -43,7 +43,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var exemptCats = new[] { Category.Books, Category.Food, Category.Medical };
             var categories = Enum.GetValues(typeof(Category)).Cast<Category>().Except(exemptCats).ToList();
             var expectedTax = new BasicTax();
-            var checkout = new Checkout(checkoutCountry, new TaxEngine());
+            var checkout = new Checkout(checkoutCountry, new Catalog(), new TaxEngine());
             var supplier = new Supplier("VAT number", "Name", supplierCountry);
             var nonTaxedPrice = NonTaxedPriceOnNArticles(n, checkout, supplier, categories);
             Assert.Equal(expectedTax.ApplyTo(nonTaxedPrice), checkout.EmitReceipt().Entries.Sum(x => x.TotalPriceWithTaxes));
@@ -61,7 +61,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var supplierCountry = Country.Usa;
             var categories = new[] { Category.Books, Category.Food, Category.Medical };
             var expectedTax = new ImportDuty();
-            var checkout = new Checkout(checkoutCountry, new TaxEngine());
+            var checkout = new Checkout(checkoutCountry, new Catalog(), new TaxEngine());
             var supplier = new Supplier("VAT number", "Name", supplierCountry);
             var nonTaxedPrice = NonTaxedPriceOnNArticles(n, checkout, supplier, categories);
             Assert.Equal(expectedTax.ApplyTo(nonTaxedPrice), checkout.EmitReceipt().Entries.Sum(x => x.TotalPriceWithTaxes));
@@ -81,7 +81,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var exemptCats = new[] { Category.Books, Category.Food, Category.Medical };
             var categories = Enum.GetValues(typeof(Category)).Cast<Category>().Except(exemptCats).ToList();
             var expectedTax = new BasicTaxAndImportDuty();
-            var checkout = new Checkout(checkoutCountry, new TaxEngine());
+            var checkout = new Checkout(checkoutCountry, new Catalog(), new TaxEngine());
             var supplier = new Supplier("VAT number", "Name", supplierCountry);
             var nonTaxedPrice = NonTaxedPriceOnNArticles(n, checkout, supplier, categories);
             Assert.Equal(expectedTax.ApplyTo(nonTaxedPrice), checkout.EmitReceipt().Entries.Sum(x => x.TotalPriceWithTaxes));
@@ -95,13 +95,13 @@ namespace SalesTaxesKata.TestSuite.Domain
             var catalog = new Catalog();
             catalog.Add(article);
             var good = new Good(article.Name, 11, article.Price);
-            var checkout = new Checkout(supplier.Country, new TaxEngine());
+            var checkout = new Checkout(supplier.Country, catalog, new TaxEngine());
             checkout.Scan(good);
             var receipt = checkout.EmitReceipt();
             var entry = receipt.Entries.Single();
             Assert.Equal(good.Name, entry.Name);
             Assert.Equal(good.Quantity, entry.Quantity);
-            Assert.Equal(good.ShelfPrice, entry.TotalPriceWithTaxes);
+            Assert.Equal(good.ShelfPrice * good.Quantity, entry.TotalPriceWithTaxes);
         }
 
         private static decimal NonTaxedPriceOnNArticles(int n, Checkout checkout, Supplier supplier, IReadOnlyList<Category> categories)
@@ -117,23 +117,6 @@ namespace SalesTaxesKata.TestSuite.Domain
                     nonTaxedPrice += x * x;
                 });
             return nonTaxedPrice;
-        }
-    }
-
-    public class Catalog
-    {
-        private readonly IDictionary<string, Article> _articles;
-
-        public IReadOnlyCollection<Article> Articles => (IReadOnlyCollection<Article>)_articles.Values;
-
-        public Catalog()
-        {
-            _articles = new Dictionary<string, Article>();
-        }
-
-        public void Add(Article article)
-        {
-            _articles.Add(article.Name, article);
         }
     }
 }
