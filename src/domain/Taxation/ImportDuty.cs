@@ -7,6 +7,10 @@ namespace SalesTaxesKata.Domain.Taxation
     {
         public override decimal Rate => 5M;
 
+        public ImportDuty() : base(new UpToFiveCentsRounding())
+        {
+        }
+
         public override bool IsApplicable(Article article, Country saleCountry)
         {
             return article.SupplierCountry != saleCountry;
