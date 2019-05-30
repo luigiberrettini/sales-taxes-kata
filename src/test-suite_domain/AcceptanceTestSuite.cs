@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using SalesTaxesKata.Domain.Geo;
 using SalesTaxesKata.Domain.Sales;
 using SalesTaxesKata.Domain.Shopping;
@@ -36,6 +38,17 @@ namespace SalesTaxesKata.TestSuite.Domain
             basket.Goods.ForEach(checkout.Scan);
             var receipt = checkout.EmitReceipt();
             Assert.Equal(output, receipt.ToString());
+        }
+    }
+
+    public static class EnumerableExtensionKit
+    {
+        public static void ForEach<T>(this IEnumerable<T> items, Action<T> action)
+        {
+            foreach (var item in items)
+            {
+                action(item);
+            }
         }
     }
 }
