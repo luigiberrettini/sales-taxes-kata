@@ -1,4 +1,6 @@
-﻿namespace SalesTaxesKata.Domain.Catalog
+﻿using SalesTaxesKata.Domain.Geo;
+
+namespace SalesTaxesKata.Domain.Sales
 {
     public class Supplier
     {

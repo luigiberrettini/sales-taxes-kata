@@ -1,4 +1,5 @@
-using SalesTaxesKata.Domain.Catalog;
+using SalesTaxesKata.Domain.Geo;
+using SalesTaxesKata.Domain.Sales;
 using SalesTaxesKata.Domain.Taxation;
 
 namespace SalesTaxesKata.Domain.Shopping
