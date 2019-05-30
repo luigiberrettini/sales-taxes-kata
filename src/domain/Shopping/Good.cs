@@ -5,6 +5,9 @@ namespace SalesTaxesKata.Domain.Shopping
 {
     public struct Good
     {
+        // $"{quantity} {name} at {shelfPrice:F2}"
+        private static readonly Regex RegEx = new Regex(@"^(\d+) (.+) at (\d+\.\d\d)$", RegexOptions.Compiled);
+
         public string Name { get; }
 
         public int Quantity { get; }
@@ -13,14 +16,12 @@ namespace SalesTaxesKata.Domain.Shopping
 
         public static Good FromString(string good)
         {
-            // $"{quantity} {name} at {shelfPrice:F2}"
-            const string regExPattern = @"^(\d+) (.+) at (\d+\.\d\d)$";
-            var fields = Regex.Split(good, regExPattern);
-            if (fields.Length != 3)
+            var match = RegEx.Match(good);
+            if (match.Groups.Count != 4)
                 throw new FormatException();
-            var name = fields[1];
-            var quantity = int.Parse(fields[0]);
-            var shelfPrice = decimal.Parse(fields[2]);
+            var name = match.Groups[2].Value;
+            var quantity = int.Parse(match.Groups[1].Value);
+            var shelfPrice = decimal.Parse(match.Groups[3].Value);
             return new Good(name, quantity, shelfPrice);
         }
 
