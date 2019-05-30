@@ -87,6 +87,23 @@ namespace SalesTaxesKata.TestSuite.Domain
             Assert.Equal(expectedTax.ApplyTo(nonTaxedPrice), checkout.EmitReceipt().Entries.Sum(x => x.TotalPriceWithTaxes));
         }
 
+        [Fact]
+        public void CheckoutRetrievesArticleFromGood()
+        {
+            var supplier = new Supplier("VAT number", "Name", supplierAndCheckoutCountry);
+            var article = new Article(1, supplier, Category.Books, Guid.NewGuid().ToString(), 10.37M);
+            var catalog = new Catalog();
+            catalog.Add(article);
+            var good = new Good(article.Name, 11, article.Price);
+            var checkout = new Checkout(supplier.Country, new TaxEngine());
+            checkout.Scan(good);
+            var receipt = checkout.EmitReceipt();
+            var entry = receipt.Entries.Single();
+            Assert.Equal(good.Name, entry.Name);
+            Assert.Equal(good.Quantity, entry.Quantity);
+            Assert.Equal(good.ShelfPrice, entry.TotalPriceWithTaxes);
+        }
+
         private static decimal NonTaxedPriceOnNArticles(int n, Checkout checkout, Supplier supplier, IReadOnlyList<Category> categories)
         {
             decimal nonTaxedPrice = 0;
