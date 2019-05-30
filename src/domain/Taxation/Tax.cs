@@ -12,7 +12,16 @@ namespace SalesTaxesKata.Domain.Taxation
 
         public virtual decimal ApplyTo(decimal price)
         {
-            var taxedPrice = price * (100 + Rate) / 100;
+            return Round(TaxedPrice(price));
+        }
+
+        private decimal TaxedPrice(decimal price)
+        {
+            return price * (100 + Rate) / 100;
+        }
+
+        private static decimal Round(decimal taxedPrice)
+        {
             return Math.Ceiling(taxedPrice * 20) / 20;
         }
     }
