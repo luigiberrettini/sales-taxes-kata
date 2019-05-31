@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
+using SalesTaxesKata.Domain.Extensions;
 using SalesTaxesKata.Domain.Geo;
+using SalesTaxesKata.Domain.Payment;
 using SalesTaxesKata.Domain.Sales;
 using SalesTaxesKata.Domain.Shopping;
 using SalesTaxesKata.Domain.Taxation;
@@ -33,22 +33,15 @@ namespace SalesTaxesKata.TestSuite.Domain
             sb.AppendLine("Total: 29.83");
             var output = sb.ToString();
 
-            var basket = Basket.FromString(input);
-            var checkout = new Checkout(Country.Ita, catalog, new TaxEngine());
-            basket.Goods.ForEach(checkout.Scan);
-            var receipt = checkout.EmitReceipt();
-            Assert.Equal(output, receipt.ToString());
+            Assert.Equal(output, Receipt(input, Country.Ita, catalog).ToString());
         }
-    }
 
-    public static class EnumerableExtensionKit
-    {
-        public static void ForEach<T>(this IEnumerable<T> items, Action<T> action)
+        private static Receipt Receipt(string input, Country saleCountry, Catalog catalog)
         {
-            foreach (var item in items)
-            {
-                action(item);
-            }
+            var basket = Basket.FromString(input);
+            var checkout = new Checkout(saleCountry, catalog, new TaxEngine());
+            basket.Goods.ForEach(checkout.Scan);
+            return checkout.EmitReceipt();
         }
     }
 }
