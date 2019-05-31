@@ -23,7 +23,7 @@ namespace SalesTaxesKata.Domain.Shopping
 
         public void Scan(Good good)
         {
-            var article = _catalog.Find(good.Name);
+            var article = _catalog.Find(good.Name, good.IsImported, _country);
             Enumerable
                 .Range(1, good.Quantity)
                 .ToList()
