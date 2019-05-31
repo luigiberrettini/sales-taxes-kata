@@ -112,7 +112,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             sb.AppendLine("6 packet of imported headache pills at 7.53");
             sb.AppendLine("6 monitor 16:9 1920x1080 at 459.72");
             sb.AppendLine("5 blazer season spring/summer 2020 at 847.83");
-            sb.AppendLine("4 Gone with the wind at 13.2");
+            sb.AppendLine("4 Gone with the wind at 13.20");
             sb.AppendLine("3 Imported monitor 16:9 1920x1080 at 322.01");
             sb.AppendLine("2 blazer (IMPORTED) season spring/summer 2020 at 1230.48");
             sb.AppendLine("1 Gone with the wind [imported from US] at 31.07");
