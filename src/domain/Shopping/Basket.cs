@@ -6,7 +6,7 @@ namespace SalesTaxesKata.Domain.Shopping
 {
     public class Basket : IEquatable<Basket>
     {
-        private IReadOnlyCollection<Good> Goods { get; }
+        public IReadOnlyCollection<Good> Goods { get; }
 
         public static Basket FromString(string input)
         {

@@ -2,6 +2,6 @@
 {
     public abstract class Rounding
     {
-        public abstract decimal Round(decimal taxedPrice);
+        public abstract decimal Round(decimal tax);
     }
 }

@@ -4,22 +4,22 @@ namespace SalesTaxesKata.Domain.Payment
 {
     public struct Entry
     {
-        public string Name { get; }
-
         public int Quantity { get; }
+
+        public string Description { get; }
 
         public decimal TotalPriceWithTaxes { get; }
 
         public Entry(Item item)
         {
-            Name = item.IsImported ? $"imported {item.Name}" : item.Name;
+            Description = item.IsImported ? $"imported {item.Name}" : item.Name;
             Quantity = item.Quantity;
-            TotalPriceWithTaxes = item.UnitPriceAfterTaxes * item.Quantity;
+            TotalPriceWithTaxes = item.TotalPriceAfterTaxes;
         }
 
         public override string ToString()
         {
-            return $"{Quantity} {Name}: {TotalPriceWithTaxes}";
+            return $"{Quantity} {Description}: {TotalPriceWithTaxes:F2}";
         }
     }
 }

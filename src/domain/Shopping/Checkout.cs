@@ -23,11 +23,8 @@ namespace SalesTaxesKata.Domain.Shopping
 
         public void Scan(Good good)
         {
-            var article = _catalog.Find(good.Name);
-            Enumerable
-                .Range(1, good.Quantity)
-                .ToList()
-                .ForEach(x => Scan(article));
+            var article = _catalog.Find(good.Name, good.Origin, _country);
+            Scan(article, good.Quantity);
         }
 
         public Receipt EmitReceipt()
@@ -35,9 +32,9 @@ namespace SalesTaxesKata.Domain.Shopping
             return _currentPurchase.BuildReceipt();
         }
 
-        private void Scan(Article article)
+        private void Scan(Article article, int quantity)
         {
-            _currentPurchase.Add(article, _taxEngine.TaxFor(article, _country));
+            _currentPurchase.Add(article, quantity, _taxEngine.TaxFor(article, _country));
         }
     }
 }

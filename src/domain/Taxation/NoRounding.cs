@@ -2,9 +2,9 @@
 {
     public class NoRounding : Rounding
     {
-        public override decimal Round(decimal taxedPrice)
+        public override decimal Round(decimal tax)
         {
-            return taxedPrice;
+            return tax;
         }
     }
 }

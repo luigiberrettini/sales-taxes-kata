@@ -4,9 +4,9 @@ namespace SalesTaxesKata.Domain.Taxation
 {
     public class UpToFiveCentsRounding : Rounding
     {
-        public override decimal Round(decimal taxedPrice)
+        public override decimal Round(decimal tax)
         {
-            return Math.Ceiling(taxedPrice * 20) / 20;
+            return Math.Ceiling(tax * 20) / 20;
         }
     }
 }
