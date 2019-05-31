@@ -109,7 +109,7 @@ namespace SalesTaxesKata.TestSuite.Domain
                     checkout.Scan(good);
                     nonTaxedPrice += x * x;
                 });
-            Assert.Equal(expectedTax.ApplyTo(nonTaxedPrice), checkout.EmitReceipt().Entries.Sum(x => x.TotalPriceWithTaxes));
+            Assert.Equal(expectedTax.ApplyTo(nonTaxedPrice), checkout.EmitReceipt().Total);
         }
     }
 }
