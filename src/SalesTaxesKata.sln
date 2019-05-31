@@ -22,6 +22,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build scripts", "Build scri
 		..\build\scripts\cake.cs = ..\build\scripts\cake.cs
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Diagrams", "Diagrams", "{347572BF-00B3-41EE-80B2-369C1687F4D8}"
+	ProjectSection(SolutionItems) = preProject
+		..\diagrams\payment.png = ..\diagrams\payment.png
+		..\diagrams\sales.png = ..\diagrams\sales.png
+		..\diagrams\shopping.png = ..\diagrams\shopping.png
+		..\diagrams\taxation.png = ..\diagrams\taxation.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +50,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7BE1CA16-D210-4946-B8CD-57D9880DDCE8} = {1BE4D662-6372-4E0F-BCA4-7EA229144633}
+		{347572BF-00B3-41EE-80B2-369C1687F4D8} = {1BE4D662-6372-4E0F-BCA4-7EA229144633}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {25A4B7F0-4E35-413E-A885-73D684AF57CC}
