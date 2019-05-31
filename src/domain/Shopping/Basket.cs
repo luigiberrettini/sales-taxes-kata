@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SalesTaxesKata.Domain.Extensions;
 
 namespace SalesTaxesKata.Domain.Shopping
 {
@@ -12,7 +13,7 @@ namespace SalesTaxesKata.Domain.Shopping
         {
             var lines = input.Split((string[])new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             var basket = new Basket();
-            lines.ToList().ForEach(x => basket.Add(Good.FromString(x)));
+            lines.ForEach(x => basket.Add(Good.FromString(x)));
             return basket;
         }
 

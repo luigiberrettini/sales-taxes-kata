@@ -4,7 +4,7 @@ using Xunit;
 
 namespace SalesTaxesKata.TestSuite.Domain
 {
-    public class BasketTestSuite
+    public class BasketTestSet
     {
         [Fact]
         public void LocalGoodFromStringFormatIsQuantityNameAtShelfPrice()

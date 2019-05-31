@@ -11,7 +11,7 @@ namespace SalesTaxesKata.Domain.Shopping
         private readonly Country _country;
         private readonly Catalog _catalog;
         private readonly TaxEngine _taxEngine;
-        private readonly Purchase _currentPurchase;
+        private Purchase _currentPurchase;
 
         public Checkout(Country country, Catalog catalog, TaxEngine taxEngine)
         {
@@ -29,7 +29,9 @@ namespace SalesTaxesKata.Domain.Shopping
 
         public Receipt EmitReceipt()
         {
-            return _currentPurchase.BuildReceipt();
+            var receipt = _currentPurchase.BuildReceipt();
+            _currentPurchase = new Purchase(_country);
+            return receipt;
         }
 
         private void Scan(Article article, int quantity)

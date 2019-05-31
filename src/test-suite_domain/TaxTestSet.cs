@@ -3,7 +3,7 @@ using Xunit;
 
 namespace SalesTaxesKata.TestSuite.Domain
 {
-    public class TaxTestSuite
+    public class TaxTestSet
     {
         [Fact]
         public void BasicTaxIsRoundedUpToFiveCents()

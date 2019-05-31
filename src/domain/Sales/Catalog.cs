@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SalesTaxesKata.Domain.Geo;
 using SalesTaxesKata.Domain.Shopping;
@@ -7,30 +8,33 @@ namespace SalesTaxesKata.Domain.Sales
 {
     public class Catalog
     {
-        private readonly IDictionary<string, IDictionary<int, Article>> _articles;
+        private readonly IDictionary<string, IDictionary<int, Article>> _byNameAndId;
 
         public Catalog()
         {
-            _articles = new Dictionary<string, IDictionary<int, Article>>();
+            _byNameAndId = new Dictionary<string, IDictionary<int, Article>>();
         }
 
-        public void Add(Article article)
+        public (bool, Article) TryAdd(Article article)
         {
-            if (!_articles.ContainsKey(article.Name))
-                _articles[article.Name] = new Dictionary<int, Article>();
+            if (!_byNameAndId.ContainsKey(article.Name))
+                _byNameAndId[article.Name] = new Dictionary<int, Article>();
 
-            // Rely on dictionary exceptions
-            _articles[article.Name].Add(article.Id, article);
+            return _byNameAndId[article.Name].ContainsKey(article.Id) ?
+                (false, _byNameAndId[article.Name][article.Id]) :
+                (true, _byNameAndId[article.Name][article.Id] = article);
         }
 
         public Article Find(string name, Origin origin, Country saleCountry)
         {
-            bool IsFromSaleCountry(Article a) => a.SupplierCountry == saleCountry;
-            var mustBeLocal = origin == Origin.Local;
-
-            // Rely on dictionary and Linq exceptions
-            var articles = _articles[name].Values;
-            return articles.Single(x => IsFromSaleCountry(x) == mustBeLocal);
+            bool MatchesOrigin(Article a)
+            {
+                var isFromSaleCountry = a.SupplierCountry == saleCountry;
+                var mustBeLocal = origin == Origin.Local;
+                return isFromSaleCountry == mustBeLocal;
+            }
+            var matchingName = _byNameAndId.ContainsKey(name) ? _byNameAndId[name].Values : Enumerable.Empty<Article>();
+            return matchingName.SingleOrDefault(MatchesOrigin) ?? Article.NullArticle;
         }
     }
 }

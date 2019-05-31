@@ -6,13 +6,13 @@ using Xunit;
 
 namespace SalesTaxesKata.TestSuite.Domain
 {
-    public class TaxEngineTestSuite
+    public class TaxEngineTestSet
     {
         [Theory]
         [InlineData(Category.Books)]
         [InlineData(Category.Food)]
         [InlineData(Category.Medical)]
-        public void NoTaxesForLocalExemptArticles(Category category)
+        public void NoTaxesForLocalBasicTaxExemptArticles(Category category)
         {
             var article = new Article(1, Country.Ita, category, Guid.NewGuid().ToString(), 100);
             var taxEngine = new TaxEngine();
@@ -40,7 +40,7 @@ namespace SalesTaxesKata.TestSuite.Domain
         [InlineData(Category.Sports)]
         [InlineData(Category.Toys)]
         [InlineData(Category.VideoGames)]
-        public void BasicTaxForLocalNonExemptArticles(Category category)
+        public void BasicTaxForLocalNonBasicTaxExemptArticles(Category category)
         {
             var article = new Article(1, Country.Ita, category, Guid.NewGuid().ToString(), 100);
             var taxEngine = new TaxEngine();
@@ -52,7 +52,7 @@ namespace SalesTaxesKata.TestSuite.Domain
         [InlineData(Category.Books)]
         [InlineData(Category.Food)]
         [InlineData(Category.Medical)]
-        public void ImportDutyForImportedExemptArticles(Category category)
+        public void ImportDutyForImportedBasicTaxExemptArticles(Category category)
         {
             var article = new Article(1, Country.Ita, category, Guid.NewGuid().ToString(), 100);
             var taxEngine = new TaxEngine();
@@ -80,7 +80,7 @@ namespace SalesTaxesKata.TestSuite.Domain
         [InlineData(Category.Sports)]
         [InlineData(Category.Toys)]
         [InlineData(Category.VideoGames)]
-        public void BasicTaxAndImportDutyForImportedNonExemptArticles(Category category)
+        public void BasicTaxAndImportDutyForImportedNonBasicTaxExemptArticles(Category category)
         {
             var article = new Article(1, Country.Ita, category, Guid.NewGuid().ToString(), 100);
             var taxEngine = new TaxEngine();
