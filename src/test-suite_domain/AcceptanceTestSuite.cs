@@ -87,7 +87,7 @@ namespace SalesTaxesKata.TestSuite.Domain
         }
 
         [Fact]
-        public void ReceiptWithManyProducts()
+        public void ReceiptForMultipleProductsWithVariousQuantities()
         {
             var catalog = new Catalog();
             catalog.Add(new Article(1, Country.Ita, Category.Books, "book", 12.49M));
@@ -123,14 +123,14 @@ namespace SalesTaxesKata.TestSuite.Domain
             sb.AppendLine("2 chocolate bar: 1.70");
             sb.AppendLine("3 packet of headache pills: 29.25");
             sb.AppendLine("4 imported book: 94.46");
-            sb.AppendLine("5 chocolate bar imported: 26.15");
-            sb.AppendLine("6 packet of imported headache pills: 47.48");
+            sb.AppendLine("5 imported chocolate bar: 26.15");
+            sb.AppendLine("6 imported packet of headache pills: 47.48");
             sb.AppendLine("6 monitor 16:9 1920x1080: 3034.17");
             sb.AppendLine("5 blazer season spring/summer 2020: 4663.10");
             sb.AppendLine("4 Gone with the wind: 58.10");
-            sb.AppendLine("3 Imported monitor 16:9 1920x1080: 1110.98");
-            sb.AppendLine("2 blazer (IMPORTED) season spring/summer 2020: 2830.11");
-            sb.AppendLine("1 Gone with the wind [imported]: 35.77");
+            sb.AppendLine("3 imported monitor 16:9 1920x1080: 1110.98");
+            sb.AppendLine("2 imported blazer season spring/summer 2020: 2830.11");
+            sb.AppendLine("1 imported Gone with the wind: 35.77");
             sb.AppendLine("Sales Taxes: 1231.95");
             sb.AppendLine("Total: 11943.76");
             var output = sb.ToString();
