@@ -6,7 +6,7 @@ namespace SalesTaxesKata.Domain.Sales
     {
         public int Id { get; }
 
-        public Country SupplierCountry { get; set; }
+        public Country SupplierCountry { get; }
 
         public Category Category { get; }
 
