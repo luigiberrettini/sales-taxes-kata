@@ -10,7 +10,7 @@ using Xunit;
 
 namespace SalesTaxesKata.TestSuite.Domain
 {
-    public class PurchaseTestSuite
+    public class PurchaseTestSet
     {
         [Fact]
         public void PurchaseAppliesTax()

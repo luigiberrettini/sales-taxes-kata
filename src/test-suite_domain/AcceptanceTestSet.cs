@@ -9,7 +9,7 @@ using Xunit;
 
 namespace SalesTaxesKata.TestSuite.Domain
 {
-    public class AcceptanceTestSuite
+    public class AcceptanceTestSet
     {
         [Fact]
         public void ReceiptForBookCdChocolate()

@@ -10,7 +10,7 @@ using Xunit;
 
 namespace SalesTaxesKata.TestSuite.Domain
 {
-    public class CheckoutTestSuite
+    public class CheckoutTestSet
     {
         [Theory]
         [InlineData(1)]

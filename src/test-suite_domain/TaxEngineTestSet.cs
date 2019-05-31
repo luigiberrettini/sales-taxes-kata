@@ -6,7 +6,7 @@ using Xunit;
 
 namespace SalesTaxesKata.TestSuite.Domain
 {
-    public class TaxEngineTestSuite
+    public class TaxEngineTestSet
     {
         [Theory]
         [InlineData(Category.Books)]
