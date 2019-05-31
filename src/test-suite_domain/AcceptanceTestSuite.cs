@@ -40,7 +40,7 @@ namespace SalesTaxesKata.TestSuite.Domain
         public void ReceiptForImportedChocolateImportedPerfume()
         {
             var catalog = new Catalog();
-            catalog.Add(new Article(1, Country.Usa, Category.Food, "box of chocolate", 10M));
+            catalog.Add(new Article(1, Country.Usa, Category.Food, "box of chocolates", 10M));
             catalog.Add(new Article(2, Country.Usa, Category.Beauty, "bottle of perfume", 47.5M));
 
             var sb = new StringBuilder();
