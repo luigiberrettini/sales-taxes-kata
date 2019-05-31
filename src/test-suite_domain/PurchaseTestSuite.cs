@@ -18,7 +18,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var article = new Article(1, Country.Ita, Category.ArtsAndCrafts, Guid.NewGuid().ToString(), 100);
             var tax = new BasicTax();
             var purchase = new Purchase(article.SupplierCountry);
-            purchase.Add(article, tax);
+            purchase.Add(article, 1, tax);
             var receipt = purchase.BuildReceipt();
             Assert.NotEqual(article.Price, receipt.Total);
         }
@@ -29,8 +29,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var article = new Article(1, Country.Ita, Category.ArtsAndCrafts, Guid.NewGuid().ToString(), 100);
             var tax = new NoTax();
             var purchase = new Purchase(article.SupplierCountry);
-            purchase.Add(article, tax);
-            purchase.Add(article, tax);
+            purchase.Add(article, 2, tax);
             var receipt = purchase.BuildReceipt();
             Assert.Single(receipt.Entries);
         }
@@ -42,7 +41,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var article = new Article(1, Country.Ita, Category.ArtsAndCrafts, articleName, 100);
             var purchase = new Purchase(article.SupplierCountry);
             var tax = new BasicTax();
-            purchase.Add(article, tax);
+            purchase.Add(article, 1, tax);
             var receipt = purchase.BuildReceipt();
             var entry = receipt.Entries.Single();
 
@@ -60,21 +59,19 @@ namespace SalesTaxesKata.TestSuite.Domain
         {
             const string articleName = "Article ABC";
             const decimal articlePrice = 32.54M;
+            const int quantity = 2;
+            const decimal totalPriceWithTaxes = quantity * articlePrice;
             var article = new Article(1, Country.Usa, Category.ArtsAndCrafts, articleName, articlePrice);
             var tax = new NoTax();
 
             var localPurchase = new Purchase(Country.Usa);
-            localPurchase.Add(article, tax);
-            localPurchase.Add(article, tax);
+            localPurchase.Add(article, quantity, tax);
             var localReceipt = localPurchase.BuildReceipt();
 
             var importedPurchase = new Purchase(Country.Ita);
-            importedPurchase.Add(article, tax);
-            importedPurchase.Add(article, tax);
+            importedPurchase.Add(article, quantity, tax);
             var importedReceipt = importedPurchase.BuildReceipt();
 
-            const int quantity = 2;
-            const decimal totalPriceWithTaxes = quantity * articlePrice;
             Assert.Equal($"{quantity} {articleName}: {totalPriceWithTaxes}", localReceipt.Entries.Single().ToString());
             Assert.Equal($"{quantity} imported {articleName}: {totalPriceWithTaxes}", importedReceipt.Entries.Single().ToString());
         }
@@ -90,8 +87,8 @@ namespace SalesTaxesKata.TestSuite.Domain
             var article2 = new Article(1, Country.Usa, Category.Baby, article2Name, article2Price);
             var receipt = new Receipt();
             var noTax = new NoTax();
-            var item1 = new Item(Country.Ita, article1, noTax);
-            var item2 = new Item(Country.Ita, article2, noTax);
+            var item1 = new Item(Country.Ita, article1, 1, noTax);
+            var item2 = new Item(Country.Ita, article2, 1, noTax);
             receipt.Add(item1);
             receipt.Add(item2);
             var entry1 = new Entry(item1);

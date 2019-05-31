@@ -22,7 +22,7 @@ namespace SalesTaxesKata.Domain.Payment
         public void Add(Item item)
         {
             ((IList<Entry>)Entries).Add(new Entry(item));
-            Taxes += (item.UnitPriceAfterTaxes - item.UnitPriceBeforeTaxes) * item.Quantity;
+            Taxes += item.TotalPriceAfterTaxes - item.UnitPriceBeforeTaxes * item.Quantity;
         }
 
         public override string ToString()

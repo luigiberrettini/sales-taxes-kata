@@ -14,7 +14,7 @@ namespace SalesTaxesKata.Domain.Payment
         {
             Name = item.IsImported ? $"imported {item.Name}" : item.Name;
             Quantity = item.Quantity;
-            TotalPriceWithTaxes = item.UnitPriceAfterTaxes * item.Quantity;
+            TotalPriceWithTaxes = item.TotalPriceAfterTaxes;
         }
 
         public override string ToString()

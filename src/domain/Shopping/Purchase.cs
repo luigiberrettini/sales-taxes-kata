@@ -18,12 +18,15 @@ namespace SalesTaxesKata.Domain.Shopping
             _itemsByArticleId = new Dictionary<int, Item>();
         }
 
-        public void Add(Article article, Tax tax)
+        public void Add(Article article, int quantity, Tax tax)
         {
             if (_itemsByArticleId.ContainsKey(article.Id))
-                _itemsByArticleId[article.Id].IncreaseQuantity();
-            else
-                _itemsByArticleId[article.Id] = new Item(_country, article, tax);
+            {
+                _itemsByArticleId[article.Id].IncreaseQuantity(quantity);
+                return;
+            }
+            var item = new Item(_country, article, quantity, tax);
+            _itemsByArticleId[article.Id] = item;
         }
 
         public Receipt BuildReceipt()
