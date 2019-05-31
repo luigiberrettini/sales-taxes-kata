@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SalesTaxesKata.Domain.Extensions;
 using SalesTaxesKata.Domain.Geo;
 using SalesTaxesKata.Domain.Sales;
 using SalesTaxesKata.Domain.Shopping;
@@ -95,7 +96,6 @@ namespace SalesTaxesKata.TestSuite.Domain
             var checkout = new Checkout(checkoutCountry, catalog, new TaxEngine());
             decimal nonTaxedPrice = 0;
             Enumerable.Range(1, n)
-                .ToList()
                 .ForEach(x =>
                 {
                     var category = categories[x % categories.Count];

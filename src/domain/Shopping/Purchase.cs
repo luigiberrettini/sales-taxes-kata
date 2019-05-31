@@ -25,8 +25,7 @@ namespace SalesTaxesKata.Domain.Shopping
                 _itemsByArticleId[article.Id].IncreaseQuantity(quantity);
                 return;
             }
-            var item = new Item(_country, article, quantity, tax);
-            _itemsByArticleId[article.Id] = item;
+            _itemsByArticleId[article.Id] = new Item(_country, article, quantity, tax);
         }
 
         public Receipt BuildReceipt()
