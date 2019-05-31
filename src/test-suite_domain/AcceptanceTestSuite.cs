@@ -36,6 +36,29 @@ namespace SalesTaxesKata.TestSuite.Domain
             Assert.Equal(output, Receipt(input, Country.Ita, catalog).ToString());
         }
 
+        [Fact]
+        public void ReceiptForImportedChocolateImportedPerfume()
+        {
+            var catalog = new Catalog();
+            catalog.Add(new Article(1, Country.Usa, Category.Food, "box of chocolate", 10M));
+            catalog.Add(new Article(2, Country.Usa, Category.Beauty, "bottle of perfume", 47.5M));
+
+            var sb = new StringBuilder();
+            sb.AppendLine("1 imported box of chocolates at 10.00");
+            sb.AppendLine("1 imported bottle of perfume at 47.50");
+            var input = sb.ToString();
+
+            sb.Clear();
+            sb.AppendLine("1 imported box of chocolates: 10.50");
+            sb.AppendLine("1 imported bottle of perfume: 54.65");
+            sb.AppendLine("Sales Taxes: 7.65");
+            sb.AppendLine("Total: 65.15");
+            var output = sb.ToString();
+
+            Assert.Equal(output, Receipt(input, Country.Ita, catalog).ToString());
+        }
+
+
         private static Receipt Receipt(string input, Country saleCountry, Catalog catalog)
         {
             var basket = Basket.FromString(input);
