@@ -19,7 +19,7 @@ namespace SalesTaxesKata.Domain.Payment
 
         public override string ToString()
         {
-            return $"{Quantity} {Name}: {TotalPriceWithTaxes}";
+            return $"{Quantity} {Name}: {TotalPriceWithTaxes:F2}";
         }
     }
 }
