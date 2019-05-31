@@ -115,7 +115,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             sb.AppendLine("4 Gone with the wind at 13.20");
             sb.AppendLine("3 Imported monitor 16:9 1920x1080 at 322.01");
             sb.AppendLine("2 blazer (IMPORTED) season spring/summer 2020 at 1230.48");
-            sb.AppendLine("1 Gone with the wind [imported from US] at 31.07");
+            sb.AppendLine("1 Gone with the wind [imported] at 31.07");
             var input = sb.ToString();
 
             sb.Clear();
@@ -130,7 +130,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             sb.AppendLine("4 Gone with the wind: 58.10");
             sb.AppendLine("3 Imported monitor 16:9 1920x1080: 1110.98");
             sb.AppendLine("2 blazer (IMPORTED) season spring/summer 2020: 2830.11");
-            sb.AppendLine("1 Gone with the wind [imported from US]: 35.77");
+            sb.AppendLine("1 Gone with the wind [imported]: 35.77");
             sb.AppendLine("Sales Taxes: 1231.95");
             sb.AppendLine("Total: 11943.76");
             var output = sb.ToString();
