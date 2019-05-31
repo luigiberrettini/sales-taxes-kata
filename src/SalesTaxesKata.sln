@@ -28,6 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Diagrams", "Diagrams", "{34
 		..\diagrams\payment.png = ..\diagrams\payment.png
 		..\diagrams\sales.png = ..\diagrams\sales.png
 		..\diagrams\shopping.png = ..\diagrams\shopping.png
+		..\solution.md = ..\solution.md
 		..\diagrams\taxation.png = ..\diagrams\taxation.png
 	EndProjectSection
 EndProject
