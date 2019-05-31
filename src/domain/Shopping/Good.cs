@@ -7,7 +7,7 @@ namespace SalesTaxesKata.Domain.Shopping
     {
         // $"{quantity} {name} at {shelfPrice:F2}"
         private static readonly Regex RegExGood = new Regex(@"^(\d+) (.+) at (\d+\.\d\d)$", RegexOptions.Compiled);
-        private static readonly Regex RegExImported = new Regex("imported | imported", RegexOptions.Compiled);
+        private static readonly Regex RegExImported = new Regex("imported | imported", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         public string Name { get; }
 
