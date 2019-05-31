@@ -18,12 +18,12 @@ namespace SalesTaxesKata.Domain.Taxation
 
         public decimal ApplyTo(decimal price)
         {
-            return _rounding.Round(TaxedPrice(price));
+            return price + _rounding.Round(TaxAmount(price));
         }
 
-        private decimal TaxedPrice(decimal price)
+        private decimal TaxAmount(decimal price)
         {
-            return price * (100 + Rate) / 100;
+            return price * Rate / 100;
         }
     }
 }
