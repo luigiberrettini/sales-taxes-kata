@@ -79,14 +79,14 @@ namespace SalesTaxesKata.TestSuite.Domain
             var article = new Article(1, Country.Ita, Category.Books, Guid.NewGuid().ToString(), 10.37M);
             var catalog = new Catalog();
             catalog.Add(article);
-            var good = new Good(article.Name, 11, article.Price, Origin.Local);
+            var good = new Good(article.Name, 11, 1.23M, Origin.Local);
             var checkout = new Checkout(article.SupplierCountry, catalog, new TaxEngine());
             checkout.Scan(good);
             var receipt = checkout.EmitReceipt();
             var entry = receipt.Entries.Single();
             Assert.Equal(good.Name, entry.Description);
             Assert.Equal(good.Quantity, entry.Quantity);
-            Assert.Equal(good.ShelfPrice * good.Quantity, entry.TotalPriceWithTaxes);
+            Assert.Equal(article.Price * good.Quantity, entry.TotalPriceWithTaxes);
         }
 
         private static void CheckReceiptTaxedPrice(int n, IReadOnlyList<Category> categories, Country supplierCountry, Country checkoutCountry, Tax expectedTax)
