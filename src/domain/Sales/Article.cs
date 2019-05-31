@@ -4,6 +4,8 @@ namespace SalesTaxesKata.Domain.Sales
 {
     public class Article
     {
+        public static readonly Article NullArticle = new Article(0, Country.NullCountry, 0, string.Empty, 0);
+
         public int Id { get; }
 
         public Country SupplierCountry { get; }

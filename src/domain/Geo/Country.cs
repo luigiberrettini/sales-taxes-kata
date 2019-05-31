@@ -2,6 +2,8 @@
 {
     public class Country
     {
+        internal static readonly Country NullCountry = new Country(string.Empty, string.Empty);
+
         #region Countries
 
         public static Country Abw { get; } = new Country("ABW", "Aruba");

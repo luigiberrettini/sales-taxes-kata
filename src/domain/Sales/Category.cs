@@ -2,7 +2,7 @@
 {
     public enum Category
     {
-        ArtsAndCrafts,
+        ArtsAndCrafts = 1,
         Automotive,
         Baby,
         Beauty,
