@@ -7,7 +7,7 @@ namespace SalesTaxesKata.TestSuite.Domain
     public class BasketTestSuite
     {
         [Fact]
-        public void GoodFromStringFormatIsQuantityNameAtShelfPrice()
+        public void LocalGoodFromStringFormatIsQuantityNameAtShelfPrice()
         {
             const string name = "Article ABC";
             const int quantity = 2;
@@ -15,6 +15,23 @@ namespace SalesTaxesKata.TestSuite.Domain
             var builtGood = new Good(name, quantity, shelfPrice);
             var importedGood = Good.FromString($"{quantity} {name} at {shelfPrice:F2}");
             Assert.Equal(builtGood, importedGood);
+        }
+
+        [Fact]
+        public void ImportedGoodFromStringFormatContainsTheWordImported()
+        {
+            const string name = "Article ABC DEF GHI";
+            const int quantity = 2;
+            const decimal shelfPrice = 10M;
+            var builtGood = new Good(name, quantity, shelfPrice);
+            const string printedName1 = "imported Article ABC DEF GHI";
+            const string printedName2 = "Article ABC imported DEF GHI";
+            const string printedName3 = "Article ABC DEF imported GHI";
+            const string printedName4 = "Article ABC DEF GHI imported";
+            Assert.Equal(builtGood, Good.FromString($"{quantity} {printedName1} at {shelfPrice:F2}"));
+            Assert.Equal(builtGood, Good.FromString($"{quantity} {printedName2} at {shelfPrice:F2}"));
+            Assert.Equal(builtGood, Good.FromString($"{quantity} {printedName3} at {shelfPrice:F2}"));
+            Assert.Equal(builtGood, Good.FromString($"{quantity} {printedName4} at {shelfPrice:F2}"));
         }
 
         [Fact]
