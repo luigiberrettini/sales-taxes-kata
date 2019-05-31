@@ -84,7 +84,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             checkout.Scan(good);
             var receipt = checkout.EmitReceipt();
             var entry = receipt.Entries.Single();
-            Assert.Equal(good.Name, entry.Name);
+            Assert.Equal(good.Name, entry.Description);
             Assert.Equal(good.Quantity, entry.Quantity);
             Assert.Equal(good.ShelfPrice * good.Quantity, entry.TotalPriceWithTaxes);
         }

@@ -47,7 +47,7 @@ namespace SalesTaxesKata.TestSuite.Domain
 
             const int quantity = 1;
             var priceWithTaxes = tax.ApplyTo(article.Price);
-            Assert.Equal(articleName, entry.Name);
+            Assert.Equal(articleName, entry.Description);
             Assert.Equal(quantity, entry.Quantity);
             Assert.Equal(priceWithTaxes, entry.TotalPriceWithTaxes);
             Assert.Equal(priceWithTaxes - article.Price, receipt.Taxes);
