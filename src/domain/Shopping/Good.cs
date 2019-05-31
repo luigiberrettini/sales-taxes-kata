@@ -21,7 +21,7 @@ namespace SalesTaxesKata.Domain.Shopping
         {
             var match = RegExGood.Match(good);
             if (match.Groups.Count != 4)
-                throw new FormatException();
+                throw new FormatException($"Format of {nameof(good)} is invalid: '{good}'");
             var printedName = match.Groups[2].Value;
             var name = RegExImported.Replace(printedName, string.Empty);
             var quantity = int.Parse(match.Groups[1].Value);
