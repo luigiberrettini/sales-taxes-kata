@@ -24,6 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build scripts", "Build scri
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Diagrams", "Diagrams", "{347572BF-00B3-41EE-80B2-369C1687F4D8}"
 	ProjectSection(SolutionItems) = preProject
+		..\diagrams\classdiagram.puml = ..\diagrams\classdiagram.puml
 		..\diagrams\payment.png = ..\diagrams\payment.png
 		..\diagrams\sales.png = ..\diagrams\sales.png
 		..\diagrams\shopping.png = ..\diagrams\shopping.png

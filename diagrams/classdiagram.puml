@@ -1,0 +1,44 @@
+@startuml Class diagram
+hide empty members
+
+
+namespace SalesTaxesKata.Domain.Sales #DEF {
+Catalog *-- "*" Article
+}
+
+
+namespace SalesTaxesKata.Domain.Taxation #DEF {
+abstract class Rounding
+Rounding <|-- NoRounding
+Rounding <|-- UpToFiveCentsRounding
+
+abstract class Tax
+Tax --> Rounding
+Tax <|-- BasicTaxAndImportDuty
+Tax <|-- BasicTax
+Tax <|-- NoBasicTax
+Tax <|-- ImportDuty
+
+TaxEngine "1" o-- "*" Tax
+}
+
+
+namespace SalesTaxesKata.Domain.Shopping #DEF {
+Basket *-- "*" Good
+Checkout *-- Purchase
+Purchase *-- "*" Item
+
+Checkout ..> SalesTaxesKata.Domain.Sales.Catalog: uses
+Checkout ..> SalesTaxesKata.Domain.Taxation.TaxEngine: uses
+Checkout -- "1..*" Good: > scans
+Checkout -- "1..*" SalesTaxesKata.Domain.Sales.Article: > scans
+
+Purchase ..> SalesTaxesKata.Domain.Payment.Receipt: uses
+Item ..> SalesTaxesKata.Domain.Taxation.Tax: applies
+}
+
+
+namespace SalesTaxesKata.Domain.Payment #DEF {
+Receipt *-- "*" Entry
+}
+@enduml
