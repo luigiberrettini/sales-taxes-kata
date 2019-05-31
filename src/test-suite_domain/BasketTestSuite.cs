@@ -12,7 +12,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             const string name = "Article ABC";
             const int quantity = 2;
             const decimal shelfPrice = 10M;
-            var builtGood = new Good(name, quantity, shelfPrice, false);
+            var builtGood = new Good(name, quantity, shelfPrice, Origin.Local);
             var importedGood = Good.FromString($"{quantity} {name} at {shelfPrice:F2}");
             Assert.Equal(builtGood, importedGood);
         }
@@ -23,7 +23,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             const string name = "Article ABC DEF GHI";
             const int quantity = 2;
             const decimal shelfPrice = 10M;
-            var builtGood = new Good(name, quantity, shelfPrice, true);
+            var builtGood = new Good(name, quantity, shelfPrice, Origin.Imported);
             const string printedName1 = "imported Article ABC DEF GHI";
             const string printedName2 = "Article ABC imported DEF GHI";
             const string printedName3 = "Article ABC DEF imported GHI";
@@ -41,8 +41,8 @@ namespace SalesTaxesKata.TestSuite.Domain
         [Fact]
         public void BasketFromStringFormatIsOneLinePerGood()
         {
-            var good1 = new Good("Article ABC 1", 11, 11.47M, false);
-            var good2 = new Good("Article ABC 2", 12, 12.47M, false);
+            var good1 = new Good("Article ABC 1", 11, 11.47M, Origin.Local);
+            var good2 = new Good("Article ABC 2", 12, 12.47M, Origin.Local);
             var builtBasket = new Basket();
             builtBasket.Add(good1);
             builtBasket.Add(good2);

@@ -79,7 +79,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var article = new Article(1, Country.Ita, Category.Books, Guid.NewGuid().ToString(), 10.37M);
             var catalog = new Catalog();
             catalog.Add(article);
-            var good = new Good(article.Name, 11, article.Price, false);
+            var good = new Good(article.Name, 11, article.Price, Origin.Local);
             var checkout = new Checkout(article.SupplierCountry, catalog, new TaxEngine());
             checkout.Scan(good);
             var receipt = checkout.EmitReceipt();
@@ -104,8 +104,8 @@ namespace SalesTaxesKata.TestSuite.Domain
                     var article = new Article(x, supplierCountry, category, name, price);
                     catalog.Add(article);
                     var quantity = x;
-                    var isImported = checkoutCountry != supplierCountry;
-                    var good = new Good(article.Name, quantity, price, isImported);
+                    var origin = checkoutCountry == supplierCountry ? Origin.Local : Origin.Imported;
+                    var good = new Good(article.Name, quantity, price, origin);
                     checkout.Scan(good);
                     nonTaxedPrice += x * x;
                 });

@@ -6,8 +6,10 @@ namespace SalesTaxesKata.Domain.Shopping
     public struct Good
     {
         // $"{quantity} {name} at {shelfPrice:F2}"
-        private static readonly Regex RegExGood = new Regex(@"^(\d+) (.+) at (\d+\.\d\d)$", RegexOptions.Compiled);
-        private static readonly Regex RegExImported = new Regex(@"\({0,1}\[{0,1}imported\){0,1}\]{0,1} | \({0,1}\[{0,1}imported\){0,1}\]{0,1}", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private const string GoodRegExPattern = @"^(\d+) (.+) at (\d+\.\d\d)$";
+        private const string ImportedRegExPattern = @"\({0,1}\[{0,1}imported\){0,1}\]{0,1} | \({0,1}\[{0,1}imported\){0,1}\]{0,1}";
+        private static readonly Regex RegExGood = new Regex(GoodRegExPattern, RegexOptions.Compiled);
+        private static readonly Regex RegExImported = new Regex(ImportedRegExPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         public string Name { get; }
 
@@ -15,7 +17,7 @@ namespace SalesTaxesKata.Domain.Shopping
 
         public decimal ShelfPrice { get; }
 
-        public bool IsImported { get; }
+        public Origin Origin { get; }
 
         public static Good FromString(string good)
         {
@@ -26,16 +28,16 @@ namespace SalesTaxesKata.Domain.Shopping
             var name = RegExImported.Replace(printedName, string.Empty);
             var quantity = int.Parse(match.Groups[1].Value);
             var shelfPrice = decimal.Parse(match.Groups[3].Value);
-            var isImported = printedName != name;
-            return new Good(name, quantity, shelfPrice, isImported);
+            var origin = printedName == name ? Origin.Local : Origin.Imported;
+            return new Good(name, quantity, shelfPrice, origin);
         }
 
-        public Good(string name, int quantity, decimal shelfPrice, bool isImported)
+        public Good(string name, int quantity, decimal shelfPrice, Origin origin)
         {
             Name = name;
             Quantity = quantity;
             ShelfPrice = shelfPrice;
-            IsImported = isImported;
+            Origin = origin;
         }
     }
 }
