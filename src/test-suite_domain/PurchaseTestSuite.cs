@@ -99,7 +99,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var sb = new StringBuilder();
             sb.AppendLine(entry1.ToString());
             sb.AppendLine(entry2.ToString());
-            sb.AppendLine($"SalesTaxes: {receipt.Taxes}");
+            sb.AppendLine($"Sales Taxes: {receipt.Taxes}");
             sb.AppendLine($"Total: {receipt.Total}");
             Assert.Equal(sb.ToString(), receipt.ToString());
 

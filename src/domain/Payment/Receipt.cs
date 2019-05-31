@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SalesTaxesKata.Domain.Shopping;
@@ -30,7 +29,7 @@ namespace SalesTaxesKata.Domain.Payment
         {
             var sb = new StringBuilder();
             Entries.ToList().ForEach(x => sb.AppendLine(x.ToString()));
-            sb.AppendLine($"SalesTaxes: {Taxes}");
+            sb.AppendLine($"Sales Taxes: {Taxes}");
             sb.AppendLine($"Total: {Total}");
             return sb.ToString();
         }
