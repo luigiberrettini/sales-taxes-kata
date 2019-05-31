@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SalesTaxesKata.Domain.Geo;
 using SalesTaxesKata.Domain.Shopping;
@@ -14,13 +15,15 @@ namespace SalesTaxesKata.Domain.Sales
             _articles = new Dictionary<string, IDictionary<int, Article>>();
         }
 
-        public void Add(Article article)
+        public bool TryAdd(Article article)
         {
             if (!_articles.ContainsKey(article.Name))
                 _articles[article.Name] = new Dictionary<int, Article>();
 
-            // Rely on dictionary exceptions
-            _articles[article.Name].Add(article.Id, article);
+            if (_articles[article.Name].ContainsKey(article.Id))
+                return false;
+            _articles[article.Name][article.Id] = article;
+            return true;
         }
 
         public Article Find(string name, Origin origin, Country saleCountry)

@@ -15,9 +15,9 @@ namespace SalesTaxesKata.TestSuite.Domain
         public void ReceiptForBookCdChocolate()
         {
             var catalog = new Catalog();
-            catalog.Add(new Article(1, Country.Ita, Category.Books, "book", 12.49M));
-            catalog.Add(new Article(2, Country.Ita, Category.Music, "music CD", 14.99M));
-            catalog.Add(new Article(3, Country.Ita, Category.Food, "chocolate bar", 0.85M));
+            catalog.TryAdd(new Article(1, Country.Ita, Category.Books, "book", 12.49M));
+            catalog.TryAdd(new Article(2, Country.Ita, Category.Music, "music CD", 14.99M));
+            catalog.TryAdd(new Article(3, Country.Ita, Category.Food, "chocolate bar", 0.85M));
 
             var sb = new StringBuilder();
             sb.AppendLine("1 book at 12.49");
@@ -40,8 +40,8 @@ namespace SalesTaxesKata.TestSuite.Domain
         public void ReceiptForImportedChocolateImportedPerfume()
         {
             var catalog = new Catalog();
-            catalog.Add(new Article(1, Country.Usa, Category.Food, "box of chocolates", 10M));
-            catalog.Add(new Article(2, Country.Usa, Category.Beauty, "bottle of perfume", 47.5M));
+            catalog.TryAdd(new Article(1, Country.Usa, Category.Food, "box of chocolates", 10M));
+            catalog.TryAdd(new Article(2, Country.Usa, Category.Beauty, "bottle of perfume", 47.5M));
 
             var sb = new StringBuilder();
             sb.AppendLine("1 imported box of chocolates at 10.00");
@@ -62,10 +62,10 @@ namespace SalesTaxesKata.TestSuite.Domain
         public void ReceiptForImportedPerfumePerfumePillsImportedChocolate()
         {
             var catalog = new Catalog();
-            catalog.Add(new Article(1, Country.Usa, Category.Beauty, "bottle of perfume", 27.99M));
-            catalog.Add(new Article(2, Country.Ita, Category.Beauty, "bottle of perfume", 18.99M));
-            catalog.Add(new Article(3, Country.Ita, Category.Medical, "packet of headache pills", 9.75M));
-            catalog.Add(new Article(4, Country.Abw, Category.Food, "box of chocolates", 11.25M));
+            catalog.TryAdd(new Article(1, Country.Usa, Category.Beauty, "bottle of perfume", 27.99M));
+            catalog.TryAdd(new Article(2, Country.Ita, Category.Beauty, "bottle of perfume", 18.99M));
+            catalog.TryAdd(new Article(3, Country.Ita, Category.Medical, "packet of headache pills", 9.75M));
+            catalog.TryAdd(new Article(4, Country.Abw, Category.Food, "box of chocolates", 11.25M));
 
             var sb = new StringBuilder();
             sb.AppendLine("1 imported bottle of perfume at 27.99");
@@ -90,18 +90,18 @@ namespace SalesTaxesKata.TestSuite.Domain
         public void ReceiptForMultipleProductsWithVariousQuantities()
         {
             var catalog = new Catalog();
-            catalog.Add(new Article(1, Country.Ita, Category.Books, "book", 12.49M));
-            catalog.Add(new Article(2, Country.Ita, Category.Food, "chocolate bar", 0.85M));
-            catalog.Add(new Article(3, Country.Ita, Category.Medical, "packet of headache pills", 9.75M));
-            catalog.Add(new Article(4, Country.Abw, Category.Books, "book", 22.49M));
-            catalog.Add(new Article(5, Country.Afg, Category.Food, "chocolate bar", 4.98M));
-            catalog.Add(new Article(6, Country.Ago, Category.Medical, "packet of headache pills", 7.53M));
-            catalog.Add(new Article(7, Country.Ita, Category.Computers, "monitor 16:9 1920x1080", 459.72M));
-            catalog.Add(new Article(8, Country.Ita, Category.Fashion, "blazer season spring/summer 2020", 847.83M));
-            catalog.Add(new Article(9, Country.Ita, Category.Movies, "Gone with the wind", 13.2M));
-            catalog.Add(new Article(10, Country.Bdi, Category.Computers, "monitor 16:9 1920x1080", 322.01M));
-            catalog.Add(new Article(11, Country.Caf, Category.Fashion, "blazer season spring/summer 2020", 1230.48M));
-            catalog.Add(new Article(12, Country.Deu, Category.Movies, "Gone with the wind", 31.07M));
+            catalog.TryAdd(new Article(1, Country.Ita, Category.Books, "book", 12.49M));
+            catalog.TryAdd(new Article(2, Country.Ita, Category.Food, "chocolate bar", 0.85M));
+            catalog.TryAdd(new Article(3, Country.Ita, Category.Medical, "packet of headache pills", 9.75M));
+            catalog.TryAdd(new Article(4, Country.Abw, Category.Books, "book", 22.49M));
+            catalog.TryAdd(new Article(5, Country.Afg, Category.Food, "chocolate bar", 4.98M));
+            catalog.TryAdd(new Article(6, Country.Ago, Category.Medical, "packet of headache pills", 7.53M));
+            catalog.TryAdd(new Article(7, Country.Ita, Category.Computers, "monitor 16:9 1920x1080", 459.72M));
+            catalog.TryAdd(new Article(8, Country.Ita, Category.Fashion, "blazer season spring/summer 2020", 847.83M));
+            catalog.TryAdd(new Article(9, Country.Ita, Category.Movies, "Gone with the wind", 13.2M));
+            catalog.TryAdd(new Article(10, Country.Bdi, Category.Computers, "monitor 16:9 1920x1080", 322.01M));
+            catalog.TryAdd(new Article(11, Country.Caf, Category.Fashion, "blazer season spring/summer 2020", 1230.48M));
+            catalog.TryAdd(new Article(12, Country.Deu, Category.Movies, "Gone with the wind", 31.07M));
 
             var sb = new StringBuilder();
             sb.AppendLine("1 book at 12.49");
