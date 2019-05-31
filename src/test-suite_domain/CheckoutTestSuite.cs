@@ -17,12 +17,12 @@ namespace SalesTaxesKata.TestSuite.Domain
         [InlineData(5)]
         [InlineData(10)]
         [InlineData(100)]
-        public void NoTaxesOnCheckoutForLocalExemptArticles(int n)
+        public void NoTaxesOnCheckoutForLocalBasicTaxExemptArticles(int n)
         {
             var checkoutCountry = Country.Ita;
             var supplierCountry = checkoutCountry;
             var categories = new[] { Category.Books, Category.Food, Category.Medical };
-            var expectedTax = new NoTax();
+            var expectedTax = new NoBasicTax();
             CheckReceiptTaxedPrice(n, categories, supplierCountry, checkoutCountry, expectedTax);
         }
 
@@ -32,7 +32,7 @@ namespace SalesTaxesKata.TestSuite.Domain
         [InlineData(5)]
         [InlineData(10)]
         [InlineData(100)]
-        public void BasicTaxOnCheckoutForLocalNonExemptArticles(int n)
+        public void BasicTaxOnCheckoutForLocalNonBasicTaxExemptArticles(int n)
         {
             var checkoutCountry = Country.Ita;
             var supplierCountry = checkoutCountry;
@@ -48,7 +48,7 @@ namespace SalesTaxesKata.TestSuite.Domain
         [InlineData(5)]
         [InlineData(10)]
         [InlineData(100)]
-        public void ImportDutyOnCheckoutForImportedExemptArticles(int n)
+        public void ImportDutyOnCheckoutForImportedBasicTaxExemptArticles(int n)
         {
             var checkoutCountry = Country.Ita;
             var supplierCountry = Country.Usa;
@@ -63,7 +63,7 @@ namespace SalesTaxesKata.TestSuite.Domain
         [InlineData(5)]
         [InlineData(10)]
         [InlineData(100)]
-        public void BasicTaxAndImportDutyOnCheckoutForImportedNonExemptArticles(int n)
+        public void BasicTaxAndImportDutyOnCheckoutForImportedNonBasicTaxExemptArticles(int n)
         {
             var checkoutCountry = Country.Ita;
             var supplierCountry = Country.Usa;

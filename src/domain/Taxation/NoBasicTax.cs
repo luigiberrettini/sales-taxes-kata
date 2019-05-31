@@ -4,9 +4,9 @@ using SalesTaxesKata.Domain.Sales;
 
 namespace SalesTaxesKata.Domain.Taxation
 {
-    public class NoTax : Tax
+    public class NoBasicTax : Tax
     {
-        private static readonly HashSet<Category> ExemptCategories = new HashSet<Category>
+        private static readonly HashSet<Category> Categories = new HashSet<Category>
         {
             Category.Books,
             Category.Food,
@@ -15,13 +15,13 @@ namespace SalesTaxesKata.Domain.Taxation
 
         public override decimal Rate => 0M;
 
-        public NoTax() : base(new NoRounding())
+        public NoBasicTax() : base(new NoRounding())
         {
         }
 
         public override bool IsApplicable(Article article, Country saleCountry)
         {
-            return ExemptCategories.Contains(article.Category) && article.SupplierCountry == saleCountry; ;
+            return Categories.Contains(article.Category) && article.SupplierCountry == saleCountry; ;
         }
     }
 }

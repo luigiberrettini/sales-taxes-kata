@@ -27,7 +27,7 @@ namespace SalesTaxesKata.TestSuite.Domain
         public void ReceiptGroupsByArticle()
         {
             var article = new Article(1, Country.Ita, Category.ArtsAndCrafts, Guid.NewGuid().ToString(), 100);
-            var tax = new NoTax();
+            var tax = new NoBasicTax();
             var purchase = new Purchase(article.SupplierCountry);
             purchase.Add(article, 2, tax);
             var receipt = purchase.BuildReceipt();
@@ -62,7 +62,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             const int quantity = 2;
             const decimal totalPriceWithTaxes = quantity * articlePrice;
             var article = new Article(1, Country.Usa, Category.ArtsAndCrafts, articleName, articlePrice);
-            var tax = new NoTax();
+            var tax = new NoBasicTax();
 
             var localPurchase = new Purchase(Country.Usa);
             localPurchase.Add(article, quantity, tax);
@@ -86,9 +86,9 @@ namespace SalesTaxesKata.TestSuite.Domain
             var article1 = new Article(1, Country.Usa, Category.ArtsAndCrafts, article1Name, article1Price);
             var article2 = new Article(1, Country.Usa, Category.Baby, article2Name, article2Price);
             var receipt = new Receipt();
-            var noTax = new NoTax();
-            var item1 = new Item(Country.Ita, article1, 1, noTax);
-            var item2 = new Item(Country.Ita, article2, 1, noTax);
+            var tax = new NoBasicTax();
+            var item1 = new Item(Country.Ita, article1, 1, tax);
+            var item2 = new Item(Country.Ita, article2, 1, tax);
             receipt.Add(item1);
             receipt.Add(item2);
             var entry1 = new Entry(item1);

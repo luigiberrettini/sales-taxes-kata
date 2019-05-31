@@ -16,7 +16,7 @@ namespace SalesTaxesKata.Domain.Taxation
                 new BasicTaxAndImportDuty(),
                 new BasicTax(),
                 new ImportDuty(),
-                new NoTax()
+                new NoBasicTax()
             };
         }
 
