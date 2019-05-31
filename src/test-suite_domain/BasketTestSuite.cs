@@ -12,7 +12,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             const string name = "Article ABC";
             const int quantity = 2;
             const decimal shelfPrice = 10M;
-            var builtGood = new Good(name, quantity, shelfPrice);
+            var builtGood = new Good(name, quantity, shelfPrice, false);
             var importedGood = Good.FromString($"{quantity} {name} at {shelfPrice:F2}");
             Assert.Equal(builtGood, importedGood);
         }
@@ -23,22 +23,26 @@ namespace SalesTaxesKata.TestSuite.Domain
             const string name = "Article ABC DEF GHI";
             const int quantity = 2;
             const decimal shelfPrice = 10M;
-            var builtGood = new Good(name, quantity, shelfPrice);
+            var builtGood = new Good(name, quantity, shelfPrice, true);
             const string printedName1 = "imported Article ABC DEF GHI";
             const string printedName2 = "Article ABC imported DEF GHI";
             const string printedName3 = "Article ABC DEF imported GHI";
             const string printedName4 = "Article ABC DEF GHI imported";
-            Assert.Equal(builtGood, Good.FromString($"{quantity} {printedName1} at {shelfPrice:F2}"));
-            Assert.Equal(builtGood, Good.FromString($"{quantity} {printedName2} at {shelfPrice:F2}"));
-            Assert.Equal(builtGood, Good.FromString($"{quantity} {printedName3} at {shelfPrice:F2}"));
-            Assert.Equal(builtGood, Good.FromString($"{quantity} {printedName4} at {shelfPrice:F2}"));
+            var importedGood1 = Good.FromString($"{quantity} {printedName1} at {shelfPrice:F2}");
+            var importedGood2 = Good.FromString($"{quantity} {printedName2} at {shelfPrice:F2}");
+            var importedGood3 = Good.FromString($"{quantity} {printedName3} at {shelfPrice:F2}");
+            var importedGood4 = Good.FromString($"{quantity} {printedName4} at {shelfPrice:F2}");
+            Assert.Equal(builtGood, importedGood1);
+            Assert.Equal(builtGood, importedGood2);
+            Assert.Equal(builtGood, importedGood3);
+            Assert.Equal(builtGood, importedGood4);
         }
 
         [Fact]
         public void BasketFromStringFormatIsOneLinePerGood()
         {
-            var good1 = new Good("Article ABC 1", 11, 11.47M);
-            var good2 = new Good("Article ABC 2", 12, 12.47M);
+            var good1 = new Good("Article ABC 1", 11, 11.47M, false);
+            var good2 = new Good("Article ABC 2", 12, 12.47M, false);
             var builtBasket = new Basket();
             builtBasket.Add(good1);
             builtBasket.Add(good2);

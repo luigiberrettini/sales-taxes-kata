@@ -23,11 +23,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var supplierCountry = checkoutCountry;
             var categories = new[] { Category.Books, Category.Food, Category.Medical };
             var expectedTax = new NoTax();
-            var catalog = new Catalog();
-            var checkout = new Checkout(checkoutCountry, catalog, new TaxEngine());
-            var nonTaxedPrice = NonTaxedPriceOnNArticles(n, catalog, checkout, supplierCountry, categories);
-            Assert.Equal(expectedTax.ApplyTo(nonTaxedPrice), checkout.EmitReceipt().Entries.Sum(x => x.TotalPriceWithTaxes));
-
+            CheckReceiptTaxedPrice(n, categories, supplierCountry, checkoutCountry, expectedTax);
         }
 
         [Theory]
@@ -43,10 +39,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var exemptCats = new[] { Category.Books, Category.Food, Category.Medical };
             var categories = Enum.GetValues(typeof(Category)).Cast<Category>().Except(exemptCats).ToList();
             var expectedTax = new BasicTax();
-            var catalog = new Catalog();
-            var checkout = new Checkout(checkoutCountry, catalog, new TaxEngine());
-            var nonTaxedPrice = NonTaxedPriceOnNArticles(n, catalog, checkout, supplierCountry, categories);
-            Assert.Equal(expectedTax.ApplyTo(nonTaxedPrice), checkout.EmitReceipt().Entries.Sum(x => x.TotalPriceWithTaxes));
+            CheckReceiptTaxedPrice(n, categories, supplierCountry, checkoutCountry, expectedTax);
         }
 
         [Theory]
@@ -61,11 +54,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var supplierCountry = Country.Usa;
             var categories = new[] { Category.Books, Category.Food, Category.Medical };
             var expectedTax = new ImportDuty();
-            var catalog = new Catalog();
-            var checkout = new Checkout(checkoutCountry, catalog, new TaxEngine());
-            var nonTaxedPrice = NonTaxedPriceOnNArticles(n, catalog, checkout, supplierCountry, categories);
-            Assert.Equal(expectedTax.ApplyTo(nonTaxedPrice), checkout.EmitReceipt().Entries.Sum(x => x.TotalPriceWithTaxes));
-
+            CheckReceiptTaxedPrice(n, categories, supplierCountry, checkoutCountry, expectedTax);
         }
 
         [Theory]
@@ -81,10 +70,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var exemptCats = new[] { Category.Books, Category.Food, Category.Medical };
             var categories = Enum.GetValues(typeof(Category)).Cast<Category>().Except(exemptCats).ToList();
             var expectedTax = new BasicTaxAndImportDuty();
-            var catalog = new Catalog();
-            var checkout = new Checkout(checkoutCountry, catalog, new TaxEngine());
-            var nonTaxedPrice = NonTaxedPriceOnNArticles(n, catalog, checkout, supplierCountry, categories);
-            Assert.Equal(expectedTax.ApplyTo(nonTaxedPrice), checkout.EmitReceipt().Entries.Sum(x => x.TotalPriceWithTaxes));
+            CheckReceiptTaxedPrice(n, categories, supplierCountry, checkoutCountry, expectedTax);
         }
 
         [Fact]
@@ -93,7 +79,7 @@ namespace SalesTaxesKata.TestSuite.Domain
             var article = new Article(1, Country.Ita, Category.Books, Guid.NewGuid().ToString(), 10.37M);
             var catalog = new Catalog();
             catalog.Add(article);
-            var good = new Good(article.Name, 11, article.Price);
+            var good = new Good(article.Name, 11, article.Price, false);
             var checkout = new Checkout(article.SupplierCountry, catalog, new TaxEngine());
             checkout.Scan(good);
             var receipt = checkout.EmitReceipt();
@@ -103,22 +89,27 @@ namespace SalesTaxesKata.TestSuite.Domain
             Assert.Equal(good.ShelfPrice * good.Quantity, entry.TotalPriceWithTaxes);
         }
 
-        private static decimal NonTaxedPriceOnNArticles(int n, Catalog catalog, Checkout checkout, Country supplierCountry, IReadOnlyList<Category> categories)
+        private static void CheckReceiptTaxedPrice(int n, IReadOnlyList<Category> categories, Country supplierCountry, Country checkoutCountry, Tax expectedTax)
         {
+            var catalog = new Catalog();
+            var checkout = new Checkout(checkoutCountry, catalog, new TaxEngine());
             decimal nonTaxedPrice = 0;
             Enumerable.Range(1, n)
                 .ToList()
                 .ForEach(x =>
                 {
+                    var category = categories[x % categories.Count];
+                    var name = Guid.NewGuid().ToString();
                     var price = x;
-                    var article = new Article(x, supplierCountry, categories[x % categories.Count], Guid.NewGuid().ToString(), price);
+                    var article = new Article(x, supplierCountry, category, name, price);
                     catalog.Add(article);
                     var quantity = x;
-                    var good = new Good(article.Name, quantity, price);
+                    var isImported = checkoutCountry != supplierCountry;
+                    var good = new Good(article.Name, quantity, price, isImported);
                     checkout.Scan(good);
                     nonTaxedPrice += x * x;
                 });
-            return nonTaxedPrice;
+            Assert.Equal(expectedTax.ApplyTo(nonTaxedPrice), checkout.EmitReceipt().Entries.Sum(x => x.TotalPriceWithTaxes));
         }
     }
 }
