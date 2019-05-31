@@ -23,7 +23,7 @@ namespace SalesTaxesKata.Domain.Sales
 
         public Article Find(string name, bool isImported, Country saleCountry)
         {
-            // Rely on dictionary exceptions
+            // Rely on dictionary and Linq exceptions
             var articles = _articles[name].Values;
             return articles.Single(x => (x.SupplierCountry != saleCountry) == isImported);
 
